@@ -12,23 +12,6 @@
 
 #include <stdio.h>
 #include "ft_printf.h"
-//#include <stdarg.h>
-
-/*int somme(int a,...)
-{
-  int som=a,i=0;
-  va_list ap;
-  va_start(ap,a);
-  int c=1;
-  while(c!=0)
-  {
-    c=va_arg(ap,int);
-    som+=c;
-    i++;
-  }
-  va_end(ap);
-  return som;
-}*/
 
 int main()
 {
