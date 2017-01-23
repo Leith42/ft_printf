@@ -6,7 +6,7 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 16:26:24 by leith             #+#    #+#             */
-/*   Updated: 2017/01/22 19:27:49 by leith            ###   ########.fr       */
+/*   Updated: 2017/01/22 20:04:27 by leith            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 int main()
 {
-	ft_printf("Je suis un %s et numero %d kek", "test", 515);
+	ft_printf("Je suis un %s et numero %i kek %c", "test", 515, 'k');
 	return (0);
 }
 
-void flag_d(va_list *ap)
+void	flag_d(va_list *ap)
 {
 	ft_putnbr(va_arg(ap, int));
 }
@@ -29,25 +29,32 @@ void flag_s(va_list *ap)
 	ft_putstr(va_arg(ap, char *));
 }
 
-void exec_flag(char c, void *ap)
+void flag_c(va_list *ap)
 {
-  int  i = 0;
-  t_func g_tab[] =
-  {
-	  {&flag_s, 's'},
-	  {&flag_d, 'd'},
-	  {NULL, -1}
-  };
-
-  while (g_tab[i].key != -1)
-  {
-    if (g_tab[i].key == c)
-      g_tab[i].ptrfunc(ap);
-    i++;
-  }
+	ft_putchar(va_arg(ap, int));
 }
 
-int ft_browse(const char *str, va_list ap)
+void	exec_flag(char c, void *ap)
+{
+	int  i = 0;
+	t_func g_tab[] =
+	{
+		{&flag_s, 's'},
+		{&flag_d, 'd'},
+		{&flag_d, 'i'},
+		{&flag_c, 'c'},
+		{NULL, -1}
+	};
+
+	while (g_tab[i].key != -1)
+	{
+		if (g_tab[i].key == c)
+			g_tab[i].ptrfunc(ap);
+		i++;
+	}
+}
+
+int	ft_browse(const char *str, va_list ap)
 {
 	size_t i;
 
