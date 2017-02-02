@@ -6,7 +6,7 @@
 #    By: aazri <aazri@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/17 17:35:54 by aazri             #+#    #+#              #
-#    Updated: 2016/12/04 16:37:27 by aazri            ###   ########.fr        #
+#    Updated: 2017/01/31 18:45:52 by aazri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ ft_strtrim.c ft_strsplit.c \
 ft_putchar.c ft_putstr.c ft_putendl.c ft_putnbr.c ft_putchar_fd.c \
 ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_itoa.c \
 ft_lstnew.c	ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c \
-ft_strndup.c ft_sqroot.c
+ft_strndup.c ft_sqroot.c ft_strtolower.c ft_strtoupper.c ft_strrev.c ft_putlnbr.c \
+ft_putulnbr.c ft_ltoa_base.c ft_utoa_base.c
 
 OBJ = $(SRC:.c=.o)
 

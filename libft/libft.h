@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 17:49:53 by aazri             #+#    #+#             */
-/*   Updated: 2016/12/04 16:36:22 by aazri            ###   ########.fr       */
+/*   Updated: 2017/01/31 18:40:02 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,18 @@ char			*ft_itoa(int n);
 t_list			*ft_lstnew(void const *content, size_t content_size);
 void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void			ft_lstadd(t_list **alst, t_list *new);
+void			ft_lstadd(t_list **alst, t_list *new_list);
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 
 char			*ft_strndup(const char *src, int n);
 int				ft_sqroot(int n);
+char			*ft_strtolower(char *str);
+char			*ft_strtoupper(char *str);
+char			*ft_strrev(char *str);
+void			ft_putulnbr(unsigned long nb);
+void			ft_putlnbr(long nb);
+char			*ft_ltoa_base(long n, unsigned int base);
+char			*ft_utoa_base(unsigned long n, unsigned int base);
 
 #endif
