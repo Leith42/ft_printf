@@ -6,34 +6,36 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 17:22:19 by leith             #+#    #+#             */
-/*   Updated: 2017/02/01 18:06:27 by aazri            ###   ########.fr       */
+/*   Updated: 2017/02/07 17:55:28 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include "libft.h"
+# include <stdint.h>
 # include <stdarg.h>
 # include <unistd.h>
 # include <wchar.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <stdbool.h>
+# include "libft.h"
 
 # define	OK		1
 # define	TRUE	1
 # define	FALSE	0
 # define	ERROR	-1
 
-typedef struct		s_arg
+typedef struct		s_flags
 {
-	int				force_prefix : 1;
-	int				pad_zeroes : 1;
-	int				right_pad : 1;
-	int				force_sign : 1;
-	int				blank_sign : 1;
-	int				got_width : 1;
-	int				got_precision : 1;
+	bool			force_prefix;
+	bool			pad_zeroes;
+	bool			right_pad;
+	bool			force_sign;
+	bool			blank_sign;
+	bool			got_width;
+	bool			got_precision;
 	unsigned int	width;
 	unsigned int	precision;
 	enum {
@@ -45,7 +47,7 @@ typedef struct		s_arg
 		j,
 		z
 	}				length;
-} 					t_arg;
+} 					t_flags;
 
 typedef struct	s_format
 {
@@ -56,12 +58,23 @@ typedef struct	s_format
 
 typedef struct   s_func
 {
-	void (*ptrfunc)(t_format *, va_list);
+	void (*ptrfunc)(t_format *, va_list, t_flags *);
 	char key;
 }               t_func;
 
 int	ft_printf(const char * format, ...);
-char *ft_itoa_base(long int nb, unsigned int base);
+
 int	valid_format(t_format format, va_list arguments);
 
+int		handle_flags(t_format *format, va_list arguments, t_flags *flags);
+char	parse_flags(t_format *s, t_flags *flags);
+char	parse_width(t_format *f, va_list list, t_flags *flags);
+char	parse_precision(t_format *f, va_list list, t_flags *flags);
+char	parse_length(t_format *f, t_flags *flags);
+
+size_t	ft_nbulen(unsigned long n, unsigned int base);
+size_t	ft_nblen(long n, unsigned int base);
+void	ft_putnstr(char *s, size_t max);
+
+void width_pad(int nbrstrlen, int width, char padwith);
 #endif
