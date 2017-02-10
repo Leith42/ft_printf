@@ -6,7 +6,7 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 17:22:19 by leith             #+#    #+#             */
-/*   Updated: 2017/02/07 17:55:28 by aazri            ###   ########.fr       */
+/*   Updated: 2017/02/09 14:58:02 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,6 @@ size_t	ft_nblen(long n, unsigned int base);
 void	ft_putnstr(char *s, size_t max);
 
 void width_pad(int nbrstrlen, int width, char padwith);
+
+void	flag_D(t_format *format, va_list arguments, t_flags *flags);
 #endif

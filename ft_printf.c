@@ -6,7 +6,7 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 16:26:24 by leith             #+#    #+#             */
-/*   Updated: 2017/02/07 18:40:47 by aazri            ###   ########.fr       */
+/*   Updated: 2017/02/09 18:30:49 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,13 @@
 
 int main()
 {
-	int a,b;
-	a = printf("Faisons un %.7s %-3s %s\n", "123456789", "je suis un test", NULL);
-	b = ft_printf("Faisons un %.7s %-3s %s\n", "123456789", "je suis un test", NULL);
+	int a,b = 0;
+	intmax_t c = -5000;
+
+	a = printf("%ld\n", c);
+	b = ft_printf("%+d\n", -1);
 	printf("\n%d, %d\n", a, b);
 	return 0;
-}
-
-void	flag_d(t_format *format, va_list arguments, t_flags *flags)
-{
-	int d;
-
-	d = va_arg(arguments, int);
-	ft_putnbr(d);
-	format->pos++;
-	format->written += ft_nblen(d, 10);
-}
-
-void	flag_D(t_format *format, va_list arguments, t_flags *flags)
-{
-	long D;
-
-	D = va_arg(arguments, long);
-	ft_putlnbr(D);
-	format->pos++;
-	format->written += ft_nblen(D, 10);
 }
 
 void flag_s(t_format *format, va_list arguments, t_flags *flags)
@@ -73,16 +55,6 @@ void flag_c(t_format *format, va_list arguments, t_flags *flags)
 		width_pad(1, flags->width, ' ');
 	format->pos++;
 	format->written += flags->got_width ? flags->width : sizeof(char);
-}
-
-void flag_u(t_format *format, va_list arguments, t_flags *flags)
-{
-	unsigned int i;
-
-	i = va_arg(arguments, unsigned int);
-	ft_putlnbr(i);
-	format->pos++;
-	format->written += ft_nblen(i, 10);
 }
 
 void flag_U(t_format *format, va_list arguments, t_flags *flags)
@@ -143,10 +115,10 @@ static void handle_conversion(t_format *format, va_list arguments, t_flags *flag
 	{
 		{&flag_c, 'c'},
 		{&flag_s, 's'},
-		{&flag_d, 'i'},
-		{&flag_d, 'd'},
+		{&flag_D, 'i'},
+		{&flag_D, 'd'},
 		{&flag_D, 'D'},
-		{&flag_u, 'u'},
+		{&flag_U, 'u'},
 		{&flag_U, 'U'},
 		{&flag_x, 'x'},
 		{&flag_X, 'X'},
