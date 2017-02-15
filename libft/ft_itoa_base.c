@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ltoa_base.c                                     :+:      :+:    :+:   */
+/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/30 18:08:31 by aazri             #+#    #+#             */
-/*   Updated: 2017/01/31 19:12:08 by aazri            ###   ########.fr       */
+/*   Updated: 2017/02/13 14:21:24 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_ltoa_base(long n, unsigned int base)
+char	*ft_itoa_base(intmax_t n, unsigned int base)
 {
-	char	nb[12];
-	long tmp;
-	size_t	i;
+	char nb[12];
+	intmax_t tmp;
+	size_t i;
 
 	i = 12;
 	nb[0] = (n < 0) ? '-' : '+';

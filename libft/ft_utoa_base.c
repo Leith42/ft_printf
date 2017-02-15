@@ -6,34 +6,32 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/31 18:30:17 by aazri             #+#    #+#             */
-/*   Updated: 2017/01/31 18:30:28 by aazri            ###   ########.fr       */
+/*   Updated: 2017/02/15 13:07:22 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char *ft_utoa_base(unsigned long n, unsigned int base)
+char	*ft_utoa_base(uintmax_t n, unsigned int base)
 {
-	char			*p;
-	unsigned int	x;
-	int				i;
+	char nb[12];
+	uintmax_t tmp;
+	size_t i;
 
-	i = 0;
-	x = n;
-	while (x >= 10)
+	i = 12;
+	if (n <= 0)
 	{
-		x /= 10;
-		i++;
+		nb[--i] = '0' - (n % base);
+		n /= -base;
 	}
-	if ((p = ft_strnew(i)))
+	while (n != 0)
 	{
-		while (i >= 0)
-		{
-			x = n % base;
-			p[i] = '0' + x;
-			n = n / base;
-			i--;
-		}
+		tmp = n % base;
+		if (tmp < 10)
+			nb[--i] = '0' + tmp;
+		else
+			nb[--i] = '7' + tmp;
+		n /= base;
 	}
-	return (p);
+	return (ft_strndup(nb + i, 12 - i));
 }

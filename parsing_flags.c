@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 13:18:51 by aazri             #+#    #+#             */
-/*   Updated: 2017/02/07 16:05:47 by aazri            ###   ########.fr       */
+/*   Updated: 2017/02/15 18:29:54 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	handle_flags(t_format *format, va_list arguments, t_flags *flags)
 {
-	//format->pos++;
 	ft_bzero(flags, sizeof(t_flags));
 	if (format->string[format->pos] == '\0')
 		return (0);
@@ -117,7 +116,7 @@ char	parse_length(t_format *f, t_flags *flags)
 	if (f->string[f->pos] == 'h' && f->string[f->pos + 1] == 'h')
 	{
 		flags->length = hh;
-		f->pos =+ 2;
+		f->pos += 2;
 		return (f->string[f->pos]);
 	}
 	else if (f->string[f->pos] == 'l' && f->string[f->pos + 1] == 'l')
@@ -141,5 +140,8 @@ char	parse_length(t_format *f, t_flags *flags)
 		return (f->string[f->pos]);
 	}
 	else
+	{
+		flags->length = none;
 		return (f->string[f->pos]);
+	}
 }

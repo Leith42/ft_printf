@@ -6,12 +6,15 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 17:22:19 by leith             #+#    #+#             */
-/*   Updated: 2017/02/09 14:58:02 by aazri            ###   ########.fr       */
+/*   Updated: 2017/02/15 18:21:04 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+# define ABS(x) ((x < 0)) ? -(x) : (x)
+# define MIN(x, y) ((x < y)) ? (x) : (y)
+# define MAX(x, y) ((x > y)) ? (x) : (y)
 
 # include <stdint.h>
 # include <stdarg.h>
@@ -22,9 +25,9 @@
 # include <stdbool.h>
 # include "libft.h"
 
-# define	OK		1
-# define	TRUE	1
 # define	FALSE	0
+# define	TRUE	!FALSE
+# define	OK		TRUE
 # define	ERROR	-1
 
 typedef struct		s_flags
@@ -38,15 +41,7 @@ typedef struct		s_flags
 	bool			got_precision;
 	unsigned int	width;
 	unsigned int	precision;
-	enum {
-		none,
-		hh,
-		h,
-		l,
-		ll,
-		j,
-		z
-	}				length;
+	enum { none, hh, h, l, ll, j, z } length;
 } 					t_flags;
 
 typedef struct	s_format
@@ -75,8 +70,22 @@ char	parse_length(t_format *f, t_flags *flags);
 size_t	ft_nbulen(unsigned long n, unsigned int base);
 size_t	ft_nblen(long n, unsigned int base);
 void	ft_putnstr(char *s, size_t max);
+void	print_base(uintmax_t nb, unsigned int base);
 
-void width_pad(int nbrstrlen, int width, char padwith);
+void width_pad(int nb_len, int width, char padwith);
+void flag_D(t_format *format, va_list arguments, t_flags *flags);
+void flag_U(t_format *format, va_list arguments, t_flags *flags);
+void flag_o(t_format *format, va_list arguments, t_flags *flags);
+void flag_O(t_format *format, va_list arguments, t_flags *flags);
+void flag_X(t_format *format, va_list arguments, t_flags *flags);
+void flag_c(t_format *format, va_list arguments, t_flags *flags);
+void flag_s(t_format *format, va_list arguments, t_flags *flags);
+void flag_p(t_format *format, va_list arguments, t_flags *flags);
 
-void	flag_D(t_format *format, va_list arguments, t_flags *flags);
+size_t handle_integer(uintmax_t nb, t_flags *flags, unsigned int base, char sign);
+
+intmax_t signed_specifier(va_list arguments, t_flags *flags);
+uintmax_t unsigned_specifier(va_list arguments, t_flags *flags);
+
+t_func	*get_func_array(void);
 #endif
