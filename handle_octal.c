@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 15:52:32 by aazri             #+#    #+#             */
-/*   Updated: 2017/02/21 15:41:40 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/06 13:19:56 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void flag_o(t_format *format, va_list arguments, t_flags *flags)
 
 	if (format->string[format->pos] == 'O' && flags->length == none)
 		flags->length = l;
-	octal = unsigned_specifier(arguments, flags);
+	octal = unsigned_specifier(arguments, flags, format->string[format->pos]);
 	prefix = NULL;
 	if (flags->force_prefix == TRUE)
 	{

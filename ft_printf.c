@@ -6,22 +6,23 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 16:26:24 by leith             #+#    #+#             */
-/*   Updated: 2017/03/03 18:23:51 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/06 13:14:16 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int main()
+/*int main()
 {
 	int a,b = 0;
+	wchar_t c = L'±';
 
-	a =    ft_printf("%s", "♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
+	a =    ft_printf("%C", c);
 	puts("");
-	b =    printf("%s", "♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
+	b =   printf("%c", c);
 	puts("");
 	printf("%d %d\n", a, b);
-}
+}*/
 
 static int handle_specifier(t_format *format, va_list arguments, t_flags *flags)
 {
@@ -31,6 +32,10 @@ static int handle_specifier(t_format *format, va_list arguments, t_flags *flags)
 
 	i = 0;
 	spec = format->string[format->pos];
+	if (spec == '%')
+	{
+		spec = 'c';
+	}
 	if((f_tab = get_func_array()) == NULL || spec == '\0')
 	{
 		return (ERROR);
@@ -55,7 +60,7 @@ static int browser(t_format *format, va_list arguments, t_flags *flags)
 		{
 			format->pos++;
 			handle_flags(format, arguments, flags);
-			if((handle_specifier(format, arguments, flags)) == ERROR)
+			if ((handle_specifier(format, arguments, flags)) == ERROR)
 			{
 				return (ERROR);
 			}
@@ -79,21 +84,20 @@ void puts_stuff(t_flags flags)
 int	ft_printf(const char *string, ...)
 {
 	va_list		arguments;
-	va_list		copy;
 	t_format	format;
 	t_flags		flags;
 
 	ft_bzero(&format, sizeof(format));
 	format.string = string;
 	va_start(arguments, string);
-	va_copy(copy, arguments);
+//	va_copy(copy, arguments);
 /*	if (valid_format(format) == ERROR)
 	{
 		return (ERROR);
 	}*/
 	if (browser(&format, arguments, &flags) == ERROR)
 	{
-	//	error_with_conversion(format.string[format.pos]);
+		error_with_conversion(format.string[format.pos]);
 		format.written = ERROR;
 	}
 	//puts_stuff(flags);

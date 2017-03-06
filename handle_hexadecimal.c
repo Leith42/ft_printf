@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 15:43:06 by aazri             #+#    #+#             */
-/*   Updated: 2017/02/21 14:48:00 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/06 11:19:58 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void flag_X(t_format *format, va_list arguments, t_flags *flags)
 	char *str_hex;
 	char specifier;
 
-	u_hex = unsigned_specifier(arguments, flags);
+	u_hex = unsigned_specifier(arguments, flags, format->string[format->pos]);
 	str_hex = base_convert(u_hex, 16);
 	prefix = NULL;
 	specifier = format->string[format->pos];

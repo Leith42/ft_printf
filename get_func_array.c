@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 16:40:44 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/02 16:41:49 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/06 10:46:50 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ t_func	*get_func_array(void)
 	tab[6].key = 'o';
 	tab[7].ptrfunc = &flag_p;
 	tab[7].key = 'p';
-	tab[8].ptrfunc = &flag_percent;
-	tab[8].key = '%';
-	tab[9].ptrfunc = NULL;
-	tab[9].key = -1;
+	tab[8].ptrfunc = NULL;
+	tab[8].key = -1;
 	return (tab);
 }

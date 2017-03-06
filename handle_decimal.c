@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 14:43:44 by aazri             #+#    #+#             */
-/*   Updated: 2017/02/21 15:33:58 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/06 11:18:00 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,9 @@ size_t handle_integer(uintmax_t nb, t_flags *flags, unsigned int base, char *sig
 	nb_len = ft_nbulen(nb, base);
 	pad_len = MAX(flags->width, flags->precision);
 	if (flags->got_precision == TRUE && flags->got_width == FALSE)
+	{
 		flags->pad_zeroes = TRUE;
+	}
 	handle_pad(nb_len, flags, sign, nb, base);
 	return (print_count(nb_len, pad_len, flags, sign, nb));
 }
@@ -184,7 +186,7 @@ void flag_U(t_format *format, va_list arguments, t_flags *flags)
 {
 	uintmax_t u_integer;
 
-	u_integer = unsigned_specifier(arguments, flags);
+	u_integer = unsigned_specifier(arguments, flags, format->string[format->pos]);
 	format->written += handle_integer(u_integer, flags, 10, NULL);
 	format->pos++;
 }

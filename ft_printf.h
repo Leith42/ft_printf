@@ -6,7 +6,7 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 17:22:19 by leith             #+#    #+#             */
-/*   Updated: 2017/03/02 16:41:39 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/06 11:17:33 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,12 @@ void flag_X(t_format *format, va_list arguments, t_flags *flags);
 void flag_c(t_format *format, va_list arguments, t_flags *flags);
 void flag_s(t_format *format, va_list arguments, t_flags *flags);
 void flag_p(t_format *format, va_list arguments, t_flags *flags);
-void flag_percent(t_format *format, va_list arguments, t_flags *flags);
+//void flag_percent(t_format *format, va_list arguments, t_flags *flags);
 
 size_t handle_integer(uintmax_t nb, t_flags *flags, unsigned int base, char *sign);
 
 intmax_t signed_specifier(va_list arguments, t_flags *flags);
-uintmax_t unsigned_specifier(va_list arguments, t_flags *flags);
+uintmax_t unsigned_specifier(va_list arguments, t_flags *flags, char spec);
 
 t_func	*get_func_array(void);
 #endif

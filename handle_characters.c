@@ -6,22 +6,13 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 16:03:50 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/03 18:22:20 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/06 13:03:54 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void flag_percent(t_format *format, va_list arguments, t_flags *flags)
-{
-	(void)arguments;
-	(void)flags;
-	ft_putchar('%');
-	format->written++;
-	format->pos++;
-}
-
-void ft_putwchar(wchar_t wchar)
+void ft_putwchar(wint_t wchar)
 {
 	if (wchar <= 0x7F)
 	{
@@ -44,6 +35,18 @@ void ft_putwchar(wchar_t wchar)
 		ft_putchar(((wchar >> 12) & 0x3F) + 0x80);
 		ft_putchar(((wchar >> 6) & 0x3F) + 0x80);
 		ft_putchar((wchar & 0x3F) + 0x80);
+	}
+}
+
+void ft_putwstr(wchar_t *wstring)
+{
+	size_t i;
+
+	i = 0;
+	while (wstring[i])
+	{
+		ft_putwchar(wstring[i]);
+		i++;
 	}
 }
 
@@ -72,7 +75,7 @@ void handle_wchar(t_format *format, va_list arguments, t_flags *flags)
 {
 	wchar_t wchar;
 
-	wchar = va_arg(arguments, wchar_t);
+	wchar = va_arg(arguments, wint_t);
 	if (flags->got_width && flags->right_pad == FALSE)
 	{
 		width_pad(1, flags->width, flags->pad_zeroes ? '0' : ' ', 0);
@@ -85,30 +88,76 @@ void handle_wchar(t_format *format, va_list arguments, t_flags *flags)
 	format->written += MAX(flags->width, wchar_len(wchar));
 }
 
-void flag_s(t_format *format, va_list arguments, t_flags *flags)
+size_t ft_wstrlen(wchar_t *wstring)
 {
-	char *s;
-	size_t len;
+	size_t i;
 
-	// length == l
-	// appel fonction wchar *
-	if ((s = va_arg(arguments, char *)) == NULL)
-		s = "(null)";
-	len = ft_strlen(s);
-	if (flags->got_precision && flags->precision < len)
+	i = 0;
+	while(wstring[i])
+	{
+		i++;
+	}
+	return (i);
+}
+
+void handle_wstring(t_format *format, va_list arguments, t_flags *flags)
+{
+	wchar_t *wstring;
+	size_t len;
+	if ((wstring = va_arg(arguments, wchar_t *)) == NULL)
+	{
+		wstring = L"(null)";
+	}
+	len = ft_wstrlen(wstring);
+	if (flags->got_precision == TRUE && flags->precision < len)
 		len = flags->precision;
-	if (flags->got_width && flags->right_pad == FALSE)
-		width_pad(len, flags->width, flags->pad_zeroes ? '0' : ' ', 0);
-	ft_putnstr(s, len);
-	if (flags->got_width && flags->right_pad == TRUE)
+	if (flags->got_width == TRUE && flags->right_pad == FALSE)
+	{
+		width_pad(1, flags->width, flags->pad_zeroes ? '0' : ' ', 0);
+	}
+	ft_putwstr(wstring);
+	if (flags->got_width == TRUE && flags->right_pad == TRUE)
+	{
 		width_pad(len, flags->width, ' ', 0);
+	}
 	format->written += MAX(flags->width, len);
 	format->pos++;
 }
 
+void flag_s(t_format *format, va_list arguments, t_flags *flags)
+{
+	char specifier;
+	char *s;
+	size_t len;
+
+	specifier = format->string[format->pos];
+	if (flags->length == l || specifier == 'S')
+	{
+		handle_wstring(format, arguments, flags);
+	}
+	else
+	{
+		if ((s = va_arg(arguments, char *)) == NULL)
+			s = "(null)";
+		len = ft_strlen(s);
+		if (flags->got_precision == TRUE && flags->precision < len)
+			len = flags->precision;
+		if (flags->got_width == TRUE && flags->right_pad == FALSE)
+			width_pad(len, flags->width, flags->pad_zeroes ? '0' : ' ', 0);
+		ft_putnstr(s, len);
+		if (flags->got_width == TRUE && flags->right_pad == TRUE)
+			width_pad(len, flags->width, ' ', 0);
+		format->written += MAX(flags->width, len);
+		format->pos++;
+	}
+}
+
 void flag_c(t_format *format, va_list arguments, t_flags *flags)
 {
-	if (flags->length == l)
+	char specifier;
+
+	specifier = format->string[format->pos];
+	if (flags->length == l || specifier == 'C')
 	{
 		handle_wchar(format, arguments, flags);
 	}
@@ -118,7 +167,7 @@ void flag_c(t_format *format, va_list arguments, t_flags *flags)
 		{
 			width_pad(1, flags->width, flags->pad_zeroes ? '0' : ' ', 0);
 		}
-		ft_putchar(va_arg(arguments, int));
+		specifier == '%' ? ft_putchar('%') : ft_putchar(va_arg(arguments, int));
 		if (flags->got_width && flags->right_pad == TRUE)
 		{
 			width_pad(1, flags->width, ' ', 0);
