@@ -6,39 +6,31 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/30 16:01:39 by aazri             #+#    #+#             */
-/*   Updated: 2017/02/01 14:05:13 by aazri            ###   ########.fr       */
+/*   Updated: 2017/02/21 19:28:31 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Checks if the conversions types are valid if not print and returns an error.
-*/
-
 #include "ft_printf.h"
 
-static void handle_error (const char *ptr, va_list arguments)
+void error_with_conversion(char specifier)
 {
-	if ((!(ft_isprint(*ptr))) || *ptr == ' ')
+	ft_putendl_fd("{ERROR with the conversion '", 2);
+	ft_putchar_fd(specifier, 2);
+	ft_putendl_fd("'}", 2);
+}
+
+void unknown_conversion (const char *ptr)
+{
+	if ((!(ft_isprint(*ptr))) || *ptr + 1 == ' ')
+	{
 		ft_putendl_fd("ft_printf: '%' must be followed by a conversion type character.", 2);
+	}
 	else
 	{
 		ft_putstr_fd("ft_printf: unknown conversion type character '%", 2);
 		ft_putchar_fd(*ptr, 2);
 		ft_putendl_fd("' in format.", 2);
 	}
-	ft_putendl_fd("{ %d %i | Signed decimal integer }", 2);
-	ft_putendl_fd("{ %D | Signed decimal long integer }", 2);
-	ft_putendl_fd("{ %u | Unsigned decimal integer }", 2);
-	ft_putendl_fd("{ %U | Unsigned decimal long integer }", 2);
-	ft_putendl_fd("{ %c | Character }", 2);
-	ft_putendl_fd("{ %C | Wide character }", 2);
-	ft_putendl_fd("{ %s | String of characters }", 2);
-	ft_putendl_fd("{ %S | String of wide characters }", 2);
-	ft_putendl_fd("{ %x | Unsigned hexadecimal integer }", 2);
-	ft_putendl_fd("{ %X | Unsigned hexadecimal integer (uppercase) }", 2);
-	ft_putendl_fd("{ %o | Unsigned octal integer }", 2);
-	ft_putendl_fd("{ %O | Unsigned octal long integer }", 2);
-	ft_putendl_fd("{ %p | Pointer address }", 2);
 }
 
 static int check_format(const char *ptr)
@@ -47,7 +39,7 @@ static int check_format(const char *ptr)
 	char *tab;
 
 	i = 0;
-	tab = "+-# 0123456789sSpdDioOuUxXcC%";
+	tab = "+-#. 0123456789sSpdDioOuUxXcChljzt%";
 	while (tab[i])
 	{
 		if (*ptr == tab[i])
@@ -55,8 +47,10 @@ static int check_format(const char *ptr)
 			while (ft_isdigit(*ptr))
 			{
 				ptr++;
-				if (ft_isalpha(*ptr))
+				if (ft_isalpha(*ptr) || *ptr == '%')
+				{
 					return (check_format(ptr));
+				}
 			}
 			return (OK);
 		}
@@ -65,7 +59,7 @@ static int check_format(const char *ptr)
 	return (ERROR);
 }
 
-int	valid_format(t_format format, va_list arguments)
+int	valid_format(t_format format)
 {
 	const char *ptr;
 
@@ -75,10 +69,13 @@ int	valid_format(t_format format, va_list arguments)
 		ptr++;
 		if (check_format(ptr) == ERROR)
 		{
-			handle_error(ptr, arguments);
+			unknown_conversion(ptr);
 			return (ERROR);
 		}
-		*ptr == '%' ? ptr++ : ptr;
+		if (*ptr == '%')
+		{
+			ptr++;
+		}
 	}
 	return (OK);
 }

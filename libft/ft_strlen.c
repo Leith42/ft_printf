@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 22:02:57 by aazri             #+#    #+#             */
-/*   Updated: 2016/11/16 20:34:05 by aazri            ###   ########.fr       */
+/*   Updated: 2017/02/20 15:05:48 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ size_t	ft_strlen(const char *str)
 	size_t i;
 
 	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	if (str)
+	{
+		while (str[i])
+			i++;
+		return (i);
+	}
+	return (0);
 }

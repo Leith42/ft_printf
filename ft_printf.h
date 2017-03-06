@@ -6,7 +6,7 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 17:22:19 by leith             #+#    #+#             */
-/*   Updated: 2017/02/15 18:21:04 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/02 16:41:39 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ typedef struct   s_func
 
 int	ft_printf(const char * format, ...);
 
-int	valid_format(t_format format, va_list arguments);
+int	valid_format(t_format format);
+void error_with_conversion(char specifier);
+void unknown_conversion (const char *ptr);
 
 int		handle_flags(t_format *format, va_list arguments, t_flags *flags);
 char	parse_flags(t_format *s, t_flags *flags);
@@ -71,8 +73,16 @@ size_t	ft_nbulen(unsigned long n, unsigned int base);
 size_t	ft_nblen(long n, unsigned int base);
 void	ft_putnstr(char *s, size_t max);
 void	print_base(uintmax_t nb, unsigned int base);
+size_t adapt_width(t_flags *flags, char *sign, size_t precision, uintmax_t nb, size_t *nb_len);
+size_t adapt_precision(t_flags *flags, size_t nb_len);
+int print_count(size_t nb_len, size_t pad_len, t_flags *flags, char *prefix, uintmax_t nb);
+char *base_convert(uintmax_t nb, unsigned int base);
 
-void width_pad(int nb_len, int width, char padwith);
+void width_pad(int nb_len, int width, char padwith, char *sign);
+void handle_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base);
+void right_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base);
+void double_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base);
+void simple_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base);
 void flag_D(t_format *format, va_list arguments, t_flags *flags);
 void flag_U(t_format *format, va_list arguments, t_flags *flags);
 void flag_o(t_format *format, va_list arguments, t_flags *flags);
@@ -81,8 +91,9 @@ void flag_X(t_format *format, va_list arguments, t_flags *flags);
 void flag_c(t_format *format, va_list arguments, t_flags *flags);
 void flag_s(t_format *format, va_list arguments, t_flags *flags);
 void flag_p(t_format *format, va_list arguments, t_flags *flags);
+void flag_percent(t_format *format, va_list arguments, t_flags *flags);
 
-size_t handle_integer(uintmax_t nb, t_flags *flags, unsigned int base, char sign);
+size_t handle_integer(uintmax_t nb, t_flags *flags, unsigned int base, char *sign);
 
 intmax_t signed_specifier(va_list arguments, t_flags *flags);
 uintmax_t unsigned_specifier(va_list arguments, t_flags *flags);

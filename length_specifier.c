@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 15:47:06 by aazri             #+#    #+#             */
-/*   Updated: 2017/02/15 18:04:30 by aazri            ###   ########.fr       */
+/*   Updated: 2017/02/21 14:20:32 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ intmax_t signed_specifier(va_list arguments, t_flags *flags)
 	else if (flags->length == ll)
 		nb = (long long int)nb;
 	else if (flags->length == j)
-		nb = (intmax_t)nb;
+		return (nb);
 	else if (flags->length == z)
 		nb = (size_t)nb;
 	return (nb);
@@ -50,7 +50,7 @@ uintmax_t unsigned_specifier(va_list arguments, t_flags *flags)
 	else if (flags->length == ll)
 		nb = (unsigned long long int)nb;
 	else if (flags->length == j)
-		nb = (uintmax_t)nb;
+		return (nb);
 	else if (flags->length == z)
 		nb = (size_t)nb;
 	return (nb);
