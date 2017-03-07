@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 14:43:44 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/07 13:13:13 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/07 17:42:54 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int	flag_D(t_format *format, va_list arguments, t_flags *flags)
 	intmax_t integer;
 	char *sign;
 
-	if (format->string[format->pos] == 'D' && flags->length == none)
+	if (format->string[format->pos] == 'D')
 	{
 		flags->length = l;
 	}

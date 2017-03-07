@@ -6,28 +6,31 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 16:03:50 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/07 13:19:44 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/07 16:02:21 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void ft_putwchar(wint_t wchar)
+int ft_putwchar(wint_t wchar)
 {
 	if (wchar <= 0x7F)
 	{
 		ft_putchar(wchar);
+		return (1);
 	}
 	else if (wchar <= 0x7FF)
 	{
 		ft_putchar((wchar >> 6) + 0xC0);
 		ft_putchar((wchar & 0x3F) + 0x80);
+		return (2);
 	}
 	else if (wchar <= 0xFFFF)
 	{
 		ft_putchar((wchar >> 12) + 0xE0);
 		ft_putchar(((wchar >> 6) & 0x3F) + 0x80);
 		ft_putchar((wchar & 0x3F) + 0x80);
+		return (3);
 	}
 	else if (wchar <= 0x10FFFF)
 	{
@@ -35,17 +38,21 @@ void ft_putwchar(wint_t wchar)
 		ft_putchar(((wchar >> 12) & 0x3F) + 0x80);
 		ft_putchar(((wchar >> 6) & 0x3F) + 0x80);
 		ft_putchar((wchar & 0x3F) + 0x80);
+		return (4);
 	}
+	return (ERROR);
 }
 
-void ft_putwstr(wchar_t *wstring)
+void ft_putnwstr(wchar_t *wstring, unsigned int max)
 {
-	size_t i;
+	unsigned int i;
+	unsigned int wide_i;
 
 	i = 0;
-	while (wstring[i])
+	wide_i = 0;
+	while (wstring[i] && i < max && wide_i < max)
 	{
-		ft_putwchar(wstring[i]);
+		wide_i += ft_putwchar(wstring[i]);
 		i++;
 	}
 }
@@ -121,12 +128,14 @@ void handle_wstring(t_format *format, va_list arguments, t_flags *flags)
 	}
 	len = ft_wstrlen(wstring);
 	if (flags->got_precision == TRUE && flags->precision < len)
+	{
 		len = flags->precision;
+	}
 	if (flags->got_width == TRUE && flags->right_pad == FALSE)
 	{
-		width_pad(1, flags->width, flags->pad_zeroes ? '0' : ' ', 0);
+		width_pad(len, flags->width, flags->pad_zeroes ? '0' : ' ', 0);
 	}
-	ft_putwstr(wstring);
+	ft_putnwstr(wstring, len);
 	if (flags->got_width == TRUE && flags->right_pad == TRUE)
 	{
 		width_pad(len, flags->width, ' ', 0);

@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 15:43:06 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/07 13:19:45 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/07 17:18:23 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char *get_str_to_print(char *hex, char specifier)
 	{
 		return (NULL);
 	}
-	if (specifier == 'x')
+	if (specifier == 'x' || specifier == 'p')
 	{
 		if ((str = ft_strjoin(str, ft_strtolower(hex))) == NULL)
 		{
@@ -180,7 +180,7 @@ static size_t handle_hex(char *hex, t_flags *flags, char specifier, char *prefix
 		hex_handle_pad(hex_len, flags, prefix, specifier, hex);
 	else
 	{
-		if(!(str = get_str_to_print(hex, specifier)))
+		if((str = get_str_to_print(hex, specifier)) == NULL)
 			return (ERROR);
 		if (prefix)
 			ft_putstr(prefix);
@@ -198,13 +198,13 @@ int flag_X(t_format *format, va_list arguments, t_flags *flags)
 	char specifier;
 
 	u_hex = unsigned_specifier(arguments, flags, format->string[format->pos]);
-	if(!(str_hex = base_convert(u_hex, 16)))
+	if((str_hex = base_convert(u_hex, 16)) == NULL)
 	{
 		return (ERROR);
 	}
 	prefix = NULL;
 	specifier = format->string[format->pos];
-	if (flags->force_prefix == TRUE && u_hex != 0)
+	if ((flags->force_prefix == TRUE && u_hex != 0) || specifier == 'p')
 	{
 		if (specifier == 'x' || specifier == 'p')
 			prefix = "0x";
@@ -221,5 +221,6 @@ int flag_X(t_format *format, va_list arguments, t_flags *flags)
 
 int flag_p(t_format *format, va_list arguments, t_flags *flags)
 {
+	flags->length = z;
 	return(flag_X(format, arguments, flags));
 }
