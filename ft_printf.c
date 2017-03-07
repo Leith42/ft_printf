@@ -6,23 +6,25 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 16:26:24 by leith             #+#    #+#             */
-/*   Updated: 2017/03/06 13:14:16 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/07 13:22:42 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <locale.h>
 
-/*int main()
+int main()
 {
 	int a,b = 0;
-	wchar_t c = L'±';
+	wint_t c = L'ย';
+	wchar_t *str = L"ยՇ ςђคภﻮє Շђє ՇєאՇ, Շђєภ ς๏קץ Շђє ยภเς๏๔є คภ๔ קครՇє เՇ";
 
-	a =    ft_printf("%C", c);
+	a =    ft_printf("%lc", c);
 	puts("");
-	b =   printf("%c", c);
+	b =   printf("%lc", c);
 	puts("");
 	printf("%d %d\n", a, b);
-}*/
+}
 
 static int handle_specifier(t_format *format, va_list arguments, t_flags *flags)
 {
@@ -37,14 +39,13 @@ static int handle_specifier(t_format *format, va_list arguments, t_flags *flags)
 		spec = 'c';
 	}
 	if((f_tab = get_func_array()) == NULL || spec == '\0')
-	{
 		return (ERROR);
-	}
 	while (f_tab[i].key != -1)
 	{
 		if (f_tab[i].key == spec || ft_toupper(f_tab[i].key) == spec)
 		{
-			f_tab[i].ptrfunc(format, arguments, flags);
+			if((f_tab[i].ptrfunc(format, arguments, flags) == ERROR))
+				return (ERROR);
 		}
 		i++;
 	}
@@ -87,6 +88,7 @@ int	ft_printf(const char *string, ...)
 	t_format	format;
 	t_flags		flags;
 
+	setlocale (LC_ALL, "");
 	ft_bzero(&format, sizeof(format));
 	format.string = string;
 	va_start(arguments, string);

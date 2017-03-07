@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 14:43:44 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/06 11:18:00 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/07 13:13:13 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,7 @@ void simple_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int bas
 	if (flags->got_width == TRUE)
 	{
 		if (flags->right_pad == TRUE)
-		{
 			right_pad(nb_len, flags, sign, nb, base);
-		}
 		else if (flags->right_pad == FALSE)
 		{
 			width_pad(nb_len, flags->width - sign_len, pad_with, sign);
@@ -119,9 +117,7 @@ void simple_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int bas
 			print_base(nb, base);
 		}
 		else if (base == 8 && sign)
-		{
 			ft_putstr(sign);
-		}
 	}
 }
 
@@ -160,13 +156,15 @@ size_t handle_integer(uintmax_t nb, t_flags *flags, unsigned int base, char *sig
 	return (print_count(nb_len, pad_len, flags, sign, nb));
 }
 
-void	flag_D(t_format *format, va_list arguments, t_flags *flags)
+int	flag_D(t_format *format, va_list arguments, t_flags *flags)
 {
 	intmax_t integer;
 	char *sign;
 
 	if (format->string[format->pos] == 'D' && flags->length == none)
+	{
 		flags->length = l;
+	}
 	integer = signed_specifier(arguments, flags);
 	sign = NULL;
 	if (integer < 0 || flags->force_sign == TRUE || flags->blank_sign == TRUE)
@@ -180,13 +178,17 @@ void	flag_D(t_format *format, va_list arguments, t_flags *flags)
 	}
 	format->written += handle_integer(ABS(integer), flags, 10, sign);
 	format->pos++;
+	return (OK);
 }
 
-void flag_U(t_format *format, va_list arguments, t_flags *flags)
+int flag_U(t_format *format, va_list arguments, t_flags *flags)
 {
+	char specifier;
 	uintmax_t u_integer;
 
-	u_integer = unsigned_specifier(arguments, flags, format->string[format->pos]);
+	specifier = format->string[format->pos];
+	u_integer = unsigned_specifier(arguments, flags, specifier);
 	format->written += handle_integer(u_integer, flags, 10, NULL);
 	format->pos++;
+	return (OK);
 }

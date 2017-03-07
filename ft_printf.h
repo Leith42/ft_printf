@@ -6,7 +6,7 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 17:22:19 by leith             #+#    #+#             */
-/*   Updated: 2017/03/06 11:17:33 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/07 12:49:58 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct	s_format
 
 typedef struct   s_func
 {
-	void (*ptrfunc)(t_format *, va_list, t_flags *);
+	int (*ptrfunc)(t_format *, va_list, t_flags *);
 	char key;
 }               t_func;
 
@@ -83,14 +83,14 @@ void handle_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int bas
 void right_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base);
 void double_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base);
 void simple_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base);
-void flag_D(t_format *format, va_list arguments, t_flags *flags);
-void flag_U(t_format *format, va_list arguments, t_flags *flags);
-void flag_o(t_format *format, va_list arguments, t_flags *flags);
-void flag_O(t_format *format, va_list arguments, t_flags *flags);
-void flag_X(t_format *format, va_list arguments, t_flags *flags);
-void flag_c(t_format *format, va_list arguments, t_flags *flags);
-void flag_s(t_format *format, va_list arguments, t_flags *flags);
-void flag_p(t_format *format, va_list arguments, t_flags *flags);
+int flag_D(t_format *format, va_list arguments, t_flags *flags);
+int flag_U(t_format *format, va_list arguments, t_flags *flags);
+int flag_o(t_format *format, va_list arguments, t_flags *flags);
+int flag_O(t_format *format, va_list arguments, t_flags *flags);
+int flag_X(t_format *format, va_list arguments, t_flags *flags);
+int flag_c(t_format *format, va_list arguments, t_flags *flags);
+int flag_s(t_format *format, va_list arguments, t_flags *flags);
+int flag_p(t_format *format, va_list arguments, t_flags *flags);
 //void flag_percent(t_format *format, va_list arguments, t_flags *flags);
 
 size_t handle_integer(uintmax_t nb, t_flags *flags, unsigned int base, char *sign);

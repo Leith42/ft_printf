@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 16:03:50 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/06 13:03:54 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/07 13:19:44 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,30 @@ void handle_wchar(t_format *format, va_list arguments, t_flags *flags)
 size_t ft_wstrlen(wchar_t *wstring)
 {
 	size_t i;
+	size_t wlen;
 
 	i = 0;
+	wlen = 0;
 	while(wstring[i])
 	{
+		if (ft_isascii(wstring[i]) == TRUE)
+		{
+			wlen++;
+		}
+		else
+		{
+			wlen += wchar_len(wstring[i]);
+		}
 		i++;
 	}
-	return (i);
+	return (wlen);
 }
 
 void handle_wstring(t_format *format, va_list arguments, t_flags *flags)
 {
 	wchar_t *wstring;
 	size_t len;
+
 	if ((wstring = va_arg(arguments, wchar_t *)) == NULL)
 	{
 		wstring = L"(null)";
@@ -124,7 +135,7 @@ void handle_wstring(t_format *format, va_list arguments, t_flags *flags)
 	format->pos++;
 }
 
-void flag_s(t_format *format, va_list arguments, t_flags *flags)
+int flag_s(t_format *format, va_list arguments, t_flags *flags)
 {
 	char specifier;
 	char *s;
@@ -150,9 +161,10 @@ void flag_s(t_format *format, va_list arguments, t_flags *flags)
 		format->written += MAX(flags->width, len);
 		format->pos++;
 	}
+	return (OK);
 }
 
-void flag_c(t_format *format, va_list arguments, t_flags *flags)
+int flag_c(t_format *format, va_list arguments, t_flags *flags)
 {
 	char specifier;
 
@@ -175,4 +187,5 @@ void flag_c(t_format *format, va_list arguments, t_flags *flags)
 		format->written += flags->got_width ? flags->width : sizeof(char);
 	}
 	format->pos++;
+	return (OK);
 }

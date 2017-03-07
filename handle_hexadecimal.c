@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 15:43:06 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/06 11:19:58 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/07 13:19:45 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,24 @@ static void hex_left_pad(size_t hex_len, t_flags *flags, char *prefix, char *hex
 static char *get_str_to_print(char *hex, char specifier)
 {
 	char *str;
-	if(!(str = malloc(sizeof(char))))
+
+	if((str = malloc(sizeof(char))) == NULL)
+	{
 		return (NULL);
+	}
 	if (specifier == 'x')
 	{
-		if (!(str = ft_strjoin(str, ft_strtolower(hex))))
+		if ((str = ft_strjoin(str, ft_strtolower(hex))) == NULL)
+		{
 			return (NULL);
+		}
 	}
 	else if (specifier == 'X')
 	{
-		if (!(str = ft_strjoin(str, hex)))
-		 return (NULL);
+		if ((str = ft_strjoin(str, hex)) == NULL)
+		{
+			return (NULL);
+		}
 	}
 	return (str);
 }
@@ -38,8 +45,10 @@ static int hex_double_pad(size_t hex_len, t_flags *flags, char *prefix, char spe
 	size_t precision;
 	char *str;
 
-	if(!(str = get_str_to_print(hex, specifier)))
+	if((str = get_str_to_print(hex, specifier)) == NULL)
+	{
 		return (ERROR);
+	}
 	if (flags->width > flags->precision)
 	{
 		precision = adapt_precision(flags, hex_len);
@@ -181,7 +190,7 @@ static size_t handle_hex(char *hex, t_flags *flags, char specifier, char *prefix
 	return (print_count(hex_len, pad_len, flags, prefix, 0));
 }
 
-void flag_X(t_format *format, va_list arguments, t_flags *flags)
+int flag_X(t_format *format, va_list arguments, t_flags *flags)
 {
 	uintmax_t u_hex;
 	char *prefix;
@@ -189,7 +198,10 @@ void flag_X(t_format *format, va_list arguments, t_flags *flags)
 	char specifier;
 
 	u_hex = unsigned_specifier(arguments, flags, format->string[format->pos]);
-	str_hex = base_convert(u_hex, 16);
+	if(!(str_hex = base_convert(u_hex, 16)))
+	{
+		return (ERROR);
+	}
 	prefix = NULL;
 	specifier = format->string[format->pos];
 	if (flags->force_prefix == TRUE && u_hex != 0)
@@ -204,9 +216,10 @@ void flag_X(t_format *format, va_list arguments, t_flags *flags)
 	format->written += handle_hex(str_hex, flags, specifier, prefix);
 	format->pos++;
 	free(str_hex);
+	return (OK);
 }
 
-void flag_p(t_format *format, va_list arguments, t_flags *flags)
+int flag_p(t_format *format, va_list arguments, t_flags *flags)
 {
-	flag_X(format, arguments, flags);
+	return(flag_X(format, arguments, flags));
 }
