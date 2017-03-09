@@ -6,7 +6,7 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 17:22:19 by leith             #+#    #+#             */
-/*   Updated: 2017/03/09 11:25:23 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/09 16:54:00 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define	OK		TRUE
 # define	ERROR	-1
 
+/** STRUCT **/
 typedef struct		s_flags
 {
 	bool			force_prefix;
@@ -57,18 +58,21 @@ typedef struct   s_func
 	char key;
 }               t_func;
 
+/** Obviously **/
 int	ft_printf(const char * format, ...);
 
+/** Handle errors **/
 int	valid_format(t_format format);
-void error_with_conversion(char specifier);
-void unknown_conversion (const char *ptr);
 
+/** Parsing **/
 int		handle_flags(t_format *format, va_list arguments, t_flags *flags);
-char	parse_flags(t_format *s, t_flags *flags);
-char	parse_width(t_format *f, va_list list, t_flags *flags);
-char	parse_precision(t_format *f, va_list list, t_flags *flags);
-char	parse_length(t_format *f, t_flags *flags);
+void	parse_flags(t_format *s, t_flags *flags);
+void	parse_width(t_format *f, va_list list, t_flags *flags);
+void	parse_precision(t_format *f, va_list list, t_flags *flags);
+void	parse_length(t_format *f, t_flags *flags);
 
+/** Utils **/
+void width_pad(int nb_len, int width, char padwith, char *sign);
 size_t	ft_nbulen(unsigned long n, unsigned int base);
 size_t	ft_nblen(long n, unsigned int base);
 void	ft_putnstr(char *s, size_t max);
@@ -77,26 +81,36 @@ unsigned int adapt_width(t_flags *flags, char *sign, size_t precision, uintmax_t
 unsigned int adapt_precision(t_flags *flags, size_t nb_len);
 int print_count(size_t nb_len, size_t pad_len, t_flags *flags, char *prefix, uintmax_t nb);
 char *base_convert(uintmax_t nb, unsigned int base);
+char *get_str_to_print(char *hex, char specifier);
 
-void width_pad(int nb_len, int width, char padwith, char *sign);
-void handle_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base);
-void right_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base);
-void double_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base);
-void simple_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base);
-int flag_D(t_format *format, va_list arguments, t_flags *flags);
-int flag_U(t_format *format, va_list arguments, t_flags *flags);
-int flag_o(t_format *format, va_list arguments, t_flags *flags);
-int flag_O(t_format *format, va_list arguments, t_flags *flags);
-int flag_X(t_format *format, va_list arguments, t_flags *flags);
-int flag_c(t_format *format, va_list arguments, t_flags *flags);
-int flag_s(t_format *format, va_list arguments, t_flags *flags);
-int flag_p(t_format *format, va_list arguments, t_flags *flags);
-//void flag_percent(t_format *format, va_list arguments, t_flags *flags);
+/** Handle specifier **/
+int spec_D(t_format *format, va_list arguments, t_flags *flags);
+int spec_U(t_format *format, va_list arguments, t_flags *flags);
+int spec_o(t_format *format, va_list arguments, t_flags *flags);
+int spec_O(t_format *format, va_list arguments, t_flags *flags);
+int spec_X(t_format *format, va_list arguments, t_flags *flags);
+int spec_c(t_format *format, va_list arguments, t_flags *flags);
+int spec_s(t_format *format, va_list arguments, t_flags *flags);
+int spec_p(t_format *format, va_list arguments, t_flags *flags);
 
+/** Handle base 10 & base 8 integer **/
 size_t handle_integer(uintmax_t nb, t_flags *flags, unsigned int base, char *sign);
+void handle_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base);
 
+/** Handle base 16 integer **/
+int hex_handle_pad(t_flags *flags, char *prefix, char specifier, char *hex);
+
+/** Handle length **/
 intmax_t signed_specifier(va_list arguments, t_flags *flags);
 uintmax_t unsigned_specifier(va_list arguments, t_flags *flags, char spec);
 
+/** Get an array of functions **/
 t_func	*get_func_array(void);
+
+/** Utils for wide characters **/
+void ft_putwchar(wint_t wchar);
+void ft_putnwstr(wchar_t *wstring, unsigned int max);
+unsigned int wchar_len(wchar_t wchar);
+size_t ft_wstrlen(wchar_t *wstring);
+
 #endif

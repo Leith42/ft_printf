@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 13:18:51 by aazri             #+#    #+#             */
-/*   Updated: 2017/02/15 18:29:54 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/09 16:44:41 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,14 @@
 int	handle_flags(t_format *format, va_list arguments, t_flags *flags)
 {
 	ft_bzero(flags, sizeof(t_flags));
-	if (format->string[format->pos] == '\0')
-		return (0);
-	if (parse_flags(format, flags) == '\0')
-		return (ERROR);
-	if (parse_width(format, arguments, flags) == '\0')
-		return (ERROR);
-	if (parse_precision(format, arguments, flags) == '\0')
-		return (ERROR);
-	if (parse_length(format, flags) == '\0')
-		return (ERROR);
-	if (format->string[format->pos] == '\0')
-		return (0);
+	parse_flags(format, flags);
+	parse_width(format, arguments, flags);
+	parse_precision(format, arguments, flags);
+	parse_length(format, flags);
 	return (OK);
 }
 
-char	parse_flags(t_format *f, t_flags *flags)
+void	parse_flags(t_format *f, t_flags *flags)
 {
 	if (f->string[f->pos] == '#' || f->string[f->pos] == '0'
 	|| f->string[f->pos] == '-' || f->string[f->pos] == '+'
@@ -49,13 +41,11 @@ char	parse_flags(t_format *f, t_flags *flags)
 		f->pos++;
 		if (flags->right_pad)
 			flags->pad_zeroes = 0;
-		return (parse_flags(f, flags));
+		parse_flags(f, flags);
 	}
-	else
-		return (f->string[f->pos]);
 }
 
-char	parse_width(t_format *f, va_list list, t_flags *flags)
+void	parse_width(t_format *f, va_list list, t_flags *flags)
 {
 	int	got;
 
@@ -79,10 +69,9 @@ char	parse_width(t_format *f, va_list list, t_flags *flags)
 				flags->width = flags->width * 10 + (f->string[f->pos++] - '0');
 		}
 	}
-	return (f->string[f->pos]);
 }
 
-char parse_precision(t_format *f, va_list list, t_flags *flags)
+void parse_precision(t_format *f, va_list list, t_flags *flags)
 {
 	int prec;
 
@@ -97,33 +86,27 @@ char parse_precision(t_format *f, va_list list, t_flags *flags)
 				flags->got_precision = 1;
 				flags->precision = prec;
 			}
-			return (f->string[f->pos]);
 		}
 		else
 		{
 			while (ft_isdigit(f->string[f->pos]))
 				flags->precision = flags->precision * 10 + (f->string[f->pos++] - '0');
 			flags->got_precision = 1;
-			return (f->string[f->pos]);
 		}
 	}
-	else
-		return (f->string[f->pos]);
 }
 
-char	parse_length(t_format *f, t_flags *flags)
+void	parse_length(t_format *f, t_flags *flags)
 {
 	if (f->string[f->pos] == 'h' && f->string[f->pos + 1] == 'h')
 	{
 		flags->length = hh;
 		f->pos += 2;
-		return (f->string[f->pos]);
 	}
 	else if (f->string[f->pos] == 'l' && f->string[f->pos + 1] == 'l')
 	{
 		flags->length = ll;
 		f->pos += 2;
-		return (f->string[f->pos]);
 	}
 	else if (f->string[f->pos] == 'h' || f->string[f->pos] == 'l' ||
 			f->string[f->pos] == 'j' || f->string[f->pos] == 'z')
@@ -137,11 +120,9 @@ char	parse_length(t_format *f, t_flags *flags)
 		else if (f->string[f->pos] == 'z')
 			flags->length = z;
 		f->pos++;
-		return (f->string[f->pos]);
 	}
 	else
 	{
 		flags->length = none;
-		return (f->string[f->pos]);
 	}
 }
