@@ -6,15 +6,15 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 14:43:44 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/07 17:42:54 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/09 11:27:38 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t adapt_width(t_flags *flags, char *sign, size_t precision, uintmax_t nb, size_t *nb_len)
+unsigned adapt_width(t_flags *flags, char *sign, size_t precision, uintmax_t nb, size_t *nb_len)
 {
-	size_t width;
+	unsigned int width;
 
 	width = flags->width;
 	width -= precision;
@@ -26,9 +26,9 @@ size_t adapt_width(t_flags *flags, char *sign, size_t precision, uintmax_t nb, s
 	return (width);
 }
 
-size_t adapt_precision(t_flags *flags, size_t nb_len)
+unsigned int adapt_precision(t_flags *flags, size_t nb_len)
 {
-	size_t precision;
+	unsigned int precision;
 
 	precision = flags->precision;
 	if (precision > nb_len)
@@ -42,6 +42,18 @@ size_t adapt_precision(t_flags *flags, size_t nb_len)
 	return (precision);
 }
 
+void right_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base)
+{
+	size_t width;
+	size_t precision;
+
+	precision = adapt_precision(flags, nb_len);
+	width = adapt_width(flags, sign, precision, nb, &nb_len);
+	width_pad(0, precision, '0', sign);
+	print_base(nb, base);
+	width_pad(nb_len, width, ' ', 0);
+}
+
 void double_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base)
 {
 	size_t width;
@@ -49,46 +61,24 @@ void double_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int bas
 
 	if (flags->width > flags->precision)
 	{
-		precision = adapt_precision(flags, nb_len);
-		width = adapt_width(flags, sign, precision, nb, &nb_len);
-		if (flags->right_pad == FALSE)
+		if (flags->right_pad == TRUE)
 		{
+			right_pad(nb_len, flags, sign, nb, base);
+		}
+		else if (flags->right_pad == FALSE)
+		{
+			precision = adapt_precision(flags, nb_len);
+			width = adapt_width(flags, sign, precision, nb, &nb_len);
 			width_pad(nb_len, width,  ' ', precision ? NULL : sign);
 			width_pad(0, precision, '0', sign);
 			if (precision != 0 || nb != 0)
 				print_base(nb, base);
-		}
-		else if (flags->right_pad == TRUE)
-		{
-			width_pad(0, precision, '0', sign);
-			print_base(nb, base);
-			width_pad(nb_len, width, ' ', 0);
 		}
 	}
 	else
 	{
 		width_pad(nb_len, flags->precision, '0', sign);
 		print_base(nb, base);
-	}
-}
-
-void right_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base)
-{
-	char pad_with;
-	size_t sign_len;
-
-	sign_len = ft_strlen(sign);
-	pad_with = flags->pad_zeroes ? '0' : ' ';
-	if (sign && (*sign == '-' || *sign == '0'))
-	{
-		ft_putstr(sign);
-		print_base(nb, base);
-		width_pad(nb_len, flags->width - sign_len, pad_with, 0);
-	}
-	else
-	{
-		print_base(nb, base);
-		width_pad(nb_len, flags->width - sign_len, pad_with, sign);
 	}
 }
 

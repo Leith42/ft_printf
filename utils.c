@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:07:34 by aazri             #+#    #+#             */
-/*   Updated: 2017/02/21 16:03:42 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/08 15:55:31 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,18 @@ int print_count(size_t nb_len, size_t pad_len, t_flags *flags, char *prefix, uin
 void width_pad(int nb_len, int width, char padwith, char *sign)
 {
 	if (sign && padwith == '0')
+	{
 		ft_putstr(sign);
+	}
 	while (nb_len < width)
 	{
 		ft_putchar(padwith);
 		nb_len++;
 	}
 	if (sign && padwith != '0')
+	{
 		ft_putstr(sign);
+	}
 }
 
 void	print_base(uintmax_t nb, unsigned int base)
@@ -82,7 +86,9 @@ void	print_base(uintmax_t nb, unsigned int base)
 		print_base(nb % base, base);
 	}
 	else
+	{
 		ft_putchar(nb + '0');
+	}
 }
 
 size_t	ft_nblen(intmax_t n, unsigned int base)
@@ -90,7 +96,10 @@ size_t	ft_nblen(intmax_t n, unsigned int base)
 	char *str;
 	size_t len;
 
-	str = ft_itoa_base(n, base);
+	if ((str = ft_itoa_base(n, base)) == NULL)
+	{
+		return (ERROR);
+	}
 	len = ft_strlen(str);
 	free(str);
 	return (len);
@@ -101,7 +110,10 @@ size_t	ft_nbulen(uintmax_t n, unsigned int base)
 	char *str;
 	size_t len;
 
-	str = base_convert(n, base);
+	if ((str = base_convert(n, base)) == NULL)
+	{
+		return (ERROR);
+	}
 	len = ft_strlen(str);
 	free(str);
 	return (len);

@@ -6,31 +6,28 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 16:03:50 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/07 16:02:21 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/08 15:34:17 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_putwchar(wint_t wchar)
+void ft_putwchar(wint_t wchar)
 {
 	if (wchar <= 0x7F)
 	{
 		ft_putchar(wchar);
-		return (1);
 	}
 	else if (wchar <= 0x7FF)
 	{
 		ft_putchar((wchar >> 6) + 0xC0);
 		ft_putchar((wchar & 0x3F) + 0x80);
-		return (2);
 	}
 	else if (wchar <= 0xFFFF)
 	{
 		ft_putchar((wchar >> 12) + 0xE0);
 		ft_putchar(((wchar >> 6) & 0x3F) + 0x80);
 		ft_putchar((wchar & 0x3F) + 0x80);
-		return (3);
 	}
 	else if (wchar <= 0x10FFFF)
 	{
@@ -38,22 +35,6 @@ int ft_putwchar(wint_t wchar)
 		ft_putchar(((wchar >> 12) & 0x3F) + 0x80);
 		ft_putchar(((wchar >> 6) & 0x3F) + 0x80);
 		ft_putchar((wchar & 0x3F) + 0x80);
-		return (4);
-	}
-	return (ERROR);
-}
-
-void ft_putnwstr(wchar_t *wstring, unsigned int max)
-{
-	unsigned int i;
-	unsigned int wide_i;
-
-	i = 0;
-	wide_i = 0;
-	while (wstring[i] && i < max && wide_i < max)
-	{
-		wide_i += ft_putwchar(wstring[i]);
-		i++;
 	}
 }
 
@@ -75,7 +56,22 @@ unsigned int wchar_len(wchar_t wchar)
 	{
 		return (4);
 	}
-	return (0);
+	return (ERROR);
+}
+
+void ft_putnwstr(wchar_t *wstring, unsigned int max)
+{
+	unsigned int i;
+	unsigned int wide_i;
+
+	i = 0;
+	wide_i = 0;
+	while (wstring[i] && i < max && wide_i < max)
+	{
+		ft_putwchar(wstring[i]);
+		wide_i += wchar_len(wstring[i]);
+		i++;
+	}
 }
 
 void handle_wchar(t_format *format, va_list arguments, t_flags *flags)
