@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 15:47:06 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/07 17:35:06 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/13 15:34:49 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ uintmax_t unsigned_specifier(va_list arguments, t_flags *flags, char spec)
 	nb = va_arg(arguments, uintmax_t);
 	if (flags->length == none && spec != 'U')
 		nb = (unsigned int)nb;
-	else if (flags->length == hh)
+	else if (flags->length == hh && spec != 'U')
 		nb = (unsigned char)nb;
 	else if (flags->length == h && spec != 'U')
 		nb = (unsigned short int)nb;

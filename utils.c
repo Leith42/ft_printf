@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:07:34 by aazri             #+#    #+#             */
-/*   Updated: 2017/02/21 16:03:42 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/09 15:23:29 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,44 +34,21 @@ char *base_convert(uintmax_t nb, unsigned int base)
 	return (sortie);
 }
 
-int print_count(size_t nb_len, size_t pad_len, t_flags *flags, char *prefix, uintmax_t nb)
-{
-	if (flags->got_width == TRUE || flags->got_precision == TRUE)
-	{
-		if (flags->width > 0 || flags->precision > 0)
-		{
-			if (pad_len == flags->precision && pad_len > nb_len)
-			{
-				return (pad_len + ft_strlen(prefix));
-			}
-			else if (pad_len == flags->width && pad_len > nb_len)
-			{
-				return (pad_len);
-			}
-		}
-		else if (prefix && *prefix == '0')
-		{
-			return (pad_len + ft_strlen(prefix));
-		}
-		else
-		{
-			return (nb != 0 ? nb_len + ft_strlen(prefix) : 0);
-		}
-	}
-	return (nb_len + ft_strlen(prefix));
-}
-
 void width_pad(int nb_len, int width, char padwith, char *sign)
 {
 	if (sign && padwith == '0')
+	{
 		ft_putstr(sign);
+	}
 	while (nb_len < width)
 	{
 		ft_putchar(padwith);
 		nb_len++;
 	}
 	if (sign && padwith != '0')
+	{
 		ft_putstr(sign);
+	}
 }
 
 void	print_base(uintmax_t nb, unsigned int base)
@@ -82,7 +59,9 @@ void	print_base(uintmax_t nb, unsigned int base)
 		print_base(nb % base, base);
 	}
 	else
+	{
 		ft_putchar(nb + '0');
+	}
 }
 
 size_t	ft_nblen(intmax_t n, unsigned int base)
@@ -90,7 +69,8 @@ size_t	ft_nblen(intmax_t n, unsigned int base)
 	char *str;
 	size_t len;
 
-	str = ft_itoa_base(n, base);
+	if ((str = ft_itoa_base(n, base)) == NULL)
+		return (ERROR);
 	len = ft_strlen(str);
 	free(str);
 	return (len);
@@ -101,20 +81,9 @@ size_t	ft_nbulen(uintmax_t n, unsigned int base)
 	char *str;
 	size_t len;
 
-	str = base_convert(n, base);
+	if ((str = base_convert(n, base)) == NULL)
+		return (ERROR);
 	len = ft_strlen(str);
 	free(str);
 	return (len);
-}
-
-void ft_putnstr(char *s, size_t max)
-{
-	size_t i;
-
-	i = 0;
-	while (s[i] && i < max)
-	{
-		ft_putchar(s[i]);
-		i++;
-	}
 }
