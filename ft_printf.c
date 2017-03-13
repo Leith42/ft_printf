@@ -6,7 +6,7 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 16:26:24 by leith             #+#    #+#             */
-/*   Updated: 2017/03/09 16:52:16 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/13 18:44:30 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 	wchar_t *str2 = L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B";
 	char *str3 = "Je suis une string tout a fait normale !";
 
-	a =	  ft_printf("%.0%");
+	a =	  ft_printf("|%-0p|", &strlen);
 	puts("");
-	b =	  printf("%.0%");
+	b =	 printf("|%-19p|", &strlen);
 	puts("");
-//	printf("%d %d\n", a, b);
+	printf("%d %d\n", a, b);
 }*/
 
 static int handle_specifier(t_format *format, va_list arguments, t_flags *flags)
@@ -38,7 +38,7 @@ static int handle_specifier(t_format *format, va_list arguments, t_flags *flags)
 
 	i = 0;
 	spec = format->string[format->pos];
-	if((spec == '\0') || (f_tab = get_func_array()) == NULL)
+	if((f_tab = get_func_array()) == NULL)
 		return (ERROR);
 	while (f_tab[i].key != -1)
 	{
@@ -84,11 +84,11 @@ int	ft_printf(const char *string, ...)
 	ft_bzero(&format, sizeof(format));
 	format.string = string;
 	va_start(arguments, string);
-	if (valid_format(format) == ERROR)
+	/*if (valid_format(format) == ERROR)
 	{
 		format.written = ERROR;
-	}
-	else if (browser(&format, arguments, &flags) == ERROR)
+	}*/
+	if (browser(&format, arguments, &flags) == ERROR)
 	{
 		format.written = ERROR;
 	}

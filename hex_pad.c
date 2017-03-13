@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 14:03:05 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/09 14:52:33 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/13 16:03:02 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,17 @@ void hex_simple_pad(size_t hex_len, t_flags *flags, char *prefix, char *hex)
 			hex_left_pad(hex_len, flags, prefix, hex);
 		}
 	}
-	else if (flags->got_precision == TRUE && ft_atoi(hex) != 0)
+	else if (flags->got_precision == TRUE)
 	{
 		if (prefix)
 		{
 			ft_putstr(prefix);
 		}
 		width_pad(hex_len, flags->precision, '0', 0);
-		ft_putstr(hex);
+		if (flags->precision != 0)
+		{
+			ft_putstr(hex);
+		}
 	}
 }
 

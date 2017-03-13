@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 14:43:44 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/09 15:29:18 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/13 17:03:04 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ size_t handle_integer(uintmax_t nb, t_flags *flags, unsigned int base, char *sig
 
 	nb_len = ft_nbulen(nb, base);
 	pad_len = MAX(flags->width, flags->precision);
+	if (base == 8 && nb == 0 && sign)
+	{
+		nb_len--;
+	}
 	if (flags->got_precision == TRUE && flags->got_width == FALSE)
 	{
 		flags->pad_zeroes = TRUE;

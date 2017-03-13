@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 14:53:29 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/09 15:04:52 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/13 16:59:54 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void handle_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int bas
 	}
 	else
 	{
-		if (sign)
+		if ((base == 10) || (base == 8 && nb > 0))
 		{
 			ft_putstr(sign);
 		}

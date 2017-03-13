@@ -6,11 +6,12 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 15:43:06 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/09 15:06:22 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/13 18:39:38 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+int hex_print_count(size_t nb_len, size_t pad_len, t_flags *flags, char *prefix);
 
 static size_t handle_hex(char *hex, t_flags *flags, char specifier, char *prefix)
 {
@@ -19,6 +20,7 @@ static size_t handle_hex(char *hex, t_flags *flags, char specifier, char *prefix
 
 	hex_len = ft_strlen(hex);
 	pad_len = MAX(flags->width, flags->precision);
+	//printf("\n%ld\n", hex_len);
 	if (flags->got_precision == TRUE && flags->got_width == FALSE)
 	{
 		flags->pad_zeroes = TRUE;
@@ -32,13 +34,13 @@ static char *assign_prefix(char specifier, t_flags *flags, uintmax_t u_hex)
 	char *prefix;
 
 	prefix = NULL;
-	if ((flags->force_prefix == TRUE && u_hex != 0) || specifier == 'p')
+	if ((flags->force_prefix == TRUE) || specifier == 'p')
 	{
-		if (specifier == 'x' || specifier == 'p')
+		if ((specifier == 'x' && u_hex != 0) || (specifier == 'p'))
 		{
 			prefix = "0x";
 		}
-		else if (specifier == 'X')
+		else if (specifier == 'X' && u_hex != 0)
 		{
 			prefix = "0X";
 		}
@@ -59,7 +61,7 @@ int spec_X(t_format *format, va_list arguments, t_flags *flags)
 	int ret;
 
 	u_hex = unsigned_specifier(arguments, flags, format->string[format->pos]);
-	if((str_hex = base_convert(u_hex, 16)) == NULL)
+	if ((str_hex = base_convert(u_hex, 16)) == NULL)
 		return (ERROR);
 	specifier = format->string[format->pos];
 	prefix = assign_prefix(specifier, flags, u_hex);
