@@ -6,20 +6,13 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/30 16:01:39 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/06 10:17:25 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/09 16:48:07 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void error_with_conversion(char specifier)
-{
-	ft_putendl_fd("{ERROR with the conversion '", 2);
-	ft_putchar_fd(specifier, 2);
-	ft_putendl_fd("'}", 2);
-}
-
-void unknown_conversion (const char *ptr)
+static void unknown_conversion (const char *ptr)
 {
 	if ((!(ft_isprint(*ptr))) || *ptr + 1 == ' ')
 	{
@@ -33,25 +26,37 @@ void unknown_conversion (const char *ptr)
 	}
 }
 
-static int check_format(const char *ptr)
+static const char *skip_flags(const char *ptr)
+{
+	while (*ptr == '+'
+	|| *ptr == '-'
+	|| *ptr == '#'
+	|| *ptr == '.'
+	|| *ptr == ' '
+	|| *ptr == 'h'
+	|| *ptr == 'l'
+	|| *ptr == 'j'
+	|| *ptr == 'z'
+	|| *ptr == 't'
+	|| ft_isdigit(*ptr))
+	{
+		ptr++;
+	}
+	return (ptr);
+}
+
+static int check_format(const char **ptr)
 {
 	int i;
 	char *tab;
 
 	i = 0;
-	tab = "+-#. 0123456789sSpdDioOuUxXcChljzt%";
+	tab = "sSpdDioOuUxXcC%";
+	*ptr = skip_flags(*ptr);
 	while (tab[i])
 	{
-		if (*ptr == tab[i])
+		if (tab[i] == **ptr)
 		{
-			while (ft_isdigit(*ptr))
-			{
-				ptr++;
-				if (ft_isalpha(*ptr) || *ptr == '%')
-				{
-					return (check_format(ptr));
-				}
-			}
 			return (OK);
 		}
 		i++;
@@ -67,7 +72,7 @@ int	valid_format(t_format format)
 	while ((ptr = ft_strchr(ptr, '%')))
 	{
 		ptr++;
-		if (check_format(ptr) == ERROR)
+		if (check_format(&ptr) == ERROR)
 		{
 			unknown_conversion(ptr);
 			return (ERROR);

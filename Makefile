@@ -6,7 +6,7 @@
 #    By: aazri <aazri@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/17 17:35:54 by aazri             #+#    #+#              #
-#    Updated: 2017/02/16 18:52:39 by aazri            ###   ########.fr        #
+#    Updated: 2017/03/09 15:28:01 by aazri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,15 +18,22 @@ LIB_BIN = $(LIB_PATH)libft.a
 RM = rm -f
 
 SRC =	ft_printf.c \
-		handle_characters.c \
+		handle_char.c \
 		handle_decimal.c \
 		handle_hexadecimal.c \
 		handle_octal.c \
+		handle_string.c \
 		length_specifier.c \
 		parsing_flags.c \
 		utils.c \
+		utils_wchar.c \
 		valid_format.c \
 		get_func_array.c \
+		get_str_to_print.c \
+		hex_pad.c \
+		decimal_pad.c \
+		print_count.c \
+
 
 OBJ = $(SRC:.c=.o)
 OBJ_LIB = $(LIB_PATH)
