@@ -6,13 +6,13 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 14:53:29 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/13 16:59:54 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/15 16:36:19 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void right_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base)
+static void	right_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base)
 {
 	size_t width;
 	size_t precision;
@@ -35,8 +35,8 @@ static void left_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, in
 	{
 		precision = adapt_precision(flags, nb_len);
 		width = adapt_width(flags, sign, precision, nb, &nb_len);
-		width_pad(nb_len, width,  ' ', precision ? NULL : sign);
-		width_pad(0, precision, '0', sign);
+		width_pad(nb_len, width, ' ', precision ? NULL : sign);
+		width_pad(0, precision, '0', precision ? sign : NULL);
 		if (precision != 0 || nb != 0)
 		{
 			print_base(nb, base);
@@ -98,7 +98,7 @@ static void simple_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, 
 	}
 }
 
-void handle_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base)
+void	handle_pad(size_t nb_len, t_flags *flags, char *sign, uintmax_t nb, int base)
 {
 	if (flags->got_width && flags->got_precision)
 	{

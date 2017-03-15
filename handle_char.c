@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_characters.c                                :+:      :+:    :+:   */
+/*   handle_char.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 16:03:50 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/09 15:16:39 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/15 14:37:38 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void handle_wchar(t_format *format, va_list arguments, t_flags *flags)
 
 int spec_c(t_format *format, va_list arguments, t_flags *flags)
 {
-	char specifier;
+	char spec;
 
-	specifier = format->string[format->pos];
-	if (flags->length == l || specifier == 'C')
+	spec = format->string[format->pos];
+	if (flags->length == l || spec == 'C')
 	{
 		handle_wchar(format, arguments, flags);
 	}
@@ -44,7 +44,7 @@ int spec_c(t_format *format, va_list arguments, t_flags *flags)
 		{
 			width_pad(1, flags->width, flags->pad_zeroes ? '0' : ' ', 0);
 		}
-		specifier == '%' ? ft_putchar('%') : ft_putchar(va_arg(arguments, int));
+		spec != 'c' ? ft_putchar(spec) : ft_putchar(va_arg(arguments, int));
 		if (flags->got_width && flags->right_pad == TRUE)
 		{
 			width_pad(1, flags->width, ' ', 0);

@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 14:43:44 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/13 17:03:04 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/15 15:07:13 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ unsigned adapt_width(t_flags *flags, char *sign, size_t precision, uintmax_t nb,
 {
 	unsigned int width;
 
+	(void)nb;
+	(void)nb_len;
 	width = flags->width;
 	width -= precision;
 	width -= ft_strlen(sign);
-	if (nb == 0 && precision == 0)
+	if (nb == 0 && flags->got_precision && precision == 0)
 	{
 		*nb_len = 0;
 	}

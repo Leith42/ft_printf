@@ -6,12 +6,11 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 15:43:06 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/13 18:39:38 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/15 16:29:05 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-int hex_print_count(size_t nb_len, size_t pad_len, t_flags *flags, char *prefix);
 
 static size_t handle_hex(char *hex, t_flags *flags, char specifier, char *prefix)
 {
@@ -20,7 +19,6 @@ static size_t handle_hex(char *hex, t_flags *flags, char specifier, char *prefix
 
 	hex_len = ft_strlen(hex);
 	pad_len = MAX(flags->width, flags->precision);
-	//printf("\n%ld\n", hex_len);
 	if (flags->got_precision == TRUE && flags->got_width == FALSE)
 	{
 		flags->pad_zeroes = TRUE;
@@ -44,10 +42,6 @@ static char *assign_prefix(char specifier, t_flags *flags, uintmax_t u_hex)
 		{
 			prefix = "0X";
 		}
-	}
-	else if (flags->blank_sign == TRUE)
-	{
-		prefix = " ";
 	}
 	return (prefix);
 }

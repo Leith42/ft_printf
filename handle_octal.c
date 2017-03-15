@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 15:52:32 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/13 16:50:22 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/15 16:17:25 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 static char *assign_prefix(t_flags *flags, uintmax_t octal)
 {
 	(void)octal;
-	if (flags->force_prefix == TRUE)
-	{
+	if (flags->force_prefix == TRUE && flags->precision == 0)
 		return ("0");
-	}
 	return (NULL);
 }
 

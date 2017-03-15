@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 15:23:14 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/13 18:41:40 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/15 16:06:06 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ int print_count(size_t nb_len, size_t pad_len, t_flags *flags, char *prefix, uin
 			else if (pad_len == flags->width && pad_len > nb_len)
 			{
 				if (prefix && *prefix == '0' && pad_len - 1 == nb_len)
+				{
 					pad_len++;
+				}
 				return (pad_len);
 			}
 		}
