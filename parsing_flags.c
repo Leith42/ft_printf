@@ -6,13 +6,13 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 13:18:51 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/09 16:44:41 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/17 16:15:26 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	handle_flags(t_format *format, va_list arguments, t_flags *flags)
+int		handle_flags(t_format *format, va_list arguments, t_flags *flags)
 {
 	ft_bzero(flags, sizeof(t_flags));
 	parse_flags(format, flags);
@@ -71,7 +71,7 @@ void	parse_width(t_format *f, va_list list, t_flags *flags)
 	}
 }
 
-void parse_precision(t_format *f, va_list list, t_flags *flags)
+void	parse_precision(t_format *f, va_list list, t_flags *fl)
 {
 	int prec;
 
@@ -83,15 +83,18 @@ void parse_precision(t_format *f, va_list list, t_flags *flags)
 			f->pos++;
 			if ((prec = va_arg(list, int)) >= 0)
 			{
-				flags->got_precision = 1;
-				flags->precision = prec;
+				fl->got_precision = 1;
+				fl->precision = prec;
 			}
 		}
 		else
 		{
 			while (ft_isdigit(f->string[f->pos]))
-				flags->precision = flags->precision * 10 + (f->string[f->pos++] - '0');
-			flags->got_precision = 1;
+			{
+				fl->precision = fl->precision * 10 + (f->string[f->pos] - '0');
+				f->pos++;
+			}
+			fl->got_precision = 1;
 		}
 	}
 }
@@ -122,7 +125,5 @@ void	parse_length(t_format *f, t_flags *flags)
 		f->pos++;
 	}
 	else
-	{
 		flags->length = none;
-	}
 }

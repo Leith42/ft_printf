@@ -6,35 +6,34 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:07:34 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/09 15:23:29 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/17 16:56:31 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char *base_convert(uintmax_t nb, unsigned int base)
+char	*base_convert(uintmax_t nb, unsigned int base)
 {
-	static const char digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	char buffer[12];
-	char *sortie;
-	size_t i;
+	static const char	digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	char				buffer[12];
+	char				*sortie;
+	size_t				i;
 
 	sortie = NULL;
 	i = 12;
-	if(base < 2 || base > 36)
+	if (base < 2 || base > 36)
 		return (NULL);
 	buffer[--i] = '\0';
-	do
+	while (nb != 0 || i == 11)
 	{
-		buffer[--i] = digits[ nb%base ];
+		buffer[--i] = digits[nb % base];
 		nb /= base;
 	}
-	while(nb!=0);
 	sortie = ft_strdup(buffer + i);
 	return (sortie);
 }
 
-void width_pad(int nb_len, int width, char padwith, char *sign)
+void	width_pad(int nb_len, int width, char padwith, char *sign)
 {
 	if (sign && padwith == '0')
 	{
@@ -66,8 +65,8 @@ void	print_base(uintmax_t nb, unsigned int base)
 
 size_t	ft_nblen(intmax_t n, unsigned int base)
 {
-	char *str;
-	size_t len;
+	char	*str;
+	size_t	len;
 
 	if ((str = ft_itoa_base(n, base)) == NULL)
 		return (ERROR);
@@ -78,8 +77,8 @@ size_t	ft_nblen(intmax_t n, unsigned int base)
 
 size_t	ft_nbulen(uintmax_t n, unsigned int base)
 {
-	char *str;
-	size_t len;
+	char	*str;
+	size_t	len;
 
 	if ((str = base_convert(n, base)) == NULL)
 		return (ERROR);

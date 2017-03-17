@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/31 18:30:17 by aazri             #+#    #+#             */
-/*   Updated: 2017/02/15 13:07:22 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/17 16:49:41 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*ft_utoa_base(uintmax_t n, unsigned int base)
 {
-	char nb[12];
-	uintmax_t tmp;
-	size_t i;
+	char		nb[12];
+	uintmax_t	tmp;
+	size_t		i;
 
 	i = 12;
 	if (n <= 0)

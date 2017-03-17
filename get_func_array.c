@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 16:40:44 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/09 16:52:08 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/17 17:30:54 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ t_func	*get_func_array(void)
 {
 	t_func *tab;
 
-	if((tab = malloc(sizeof(t_func) * FUNC_NBR)) == NULL)
+	if ((tab = malloc(sizeof(t_func) * FUNC_NBR)) == NULL)
 		return (NULL);
 	tab[0].ptrfunc = &spec_c;
 	tab[0].key = 'c';
 	tab[1].ptrfunc = &spec_s;
 	tab[1].key = 's';
-	tab[2].ptrfunc = &spec_D;
+	tab[2].ptrfunc = &spec_d;
 	tab[2].key = 'i';
-	tab[3].ptrfunc = &spec_D;
+	tab[3].ptrfunc = &spec_d;
 	tab[3].key = 'd';
-	tab[4].ptrfunc = &spec_U;
+	tab[4].ptrfunc = &spec_u;
 	tab[4].key = 'u';
-	tab[5].ptrfunc = &spec_X;
+	tab[5].ptrfunc = &spec_x;
 	tab[5].key = 'x';
 	tab[6].ptrfunc = &spec_o;
 	tab[6].key = 'o';
@@ -38,6 +38,6 @@ t_func	*get_func_array(void)
 	tab[8].ptrfunc = &spec_c;
 	tab[8].key = '%';
 	tab[9].ptrfunc = NULL;
-	tab[9].key = -1;
+	tab[9].key = ERROR;
 	return (tab);
 }

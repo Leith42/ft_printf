@@ -6,13 +6,13 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 15:20:52 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/09 15:20:59 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/17 16:46:58 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void ft_putnstr(char *s, size_t max)
+void	ft_putnstr(char *s, size_t max)
 {
 	size_t i;
 
