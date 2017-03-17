@@ -5,14 +5,43 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/15 15:43:06 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/15 16:29:05 by aazri            ###   ########.fr       */
+/*   Created: 2017/03/17 14:51:24 by aazri             #+#    #+#             */
+/*   Updated: 2017/03/17 16:45:56 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static size_t handle_hex(char *hex, t_flags *flags, char specifier, char *prefix)
+int				hex_handle_pad(t_flags *flags, char spec, char *hex)
+{
+	char	*str;
+	size_t	hex_len;
+
+	if ((str = get_str_to_print(hex, spec)) == NULL)
+		return (ERROR);
+	hex_len = ft_strlen(str);
+	if (flags->got_width && flags->got_precision)
+	{
+		if ((hex_double_pad(hex_len, flags, spec, hex)) == ERROR)
+			return (ERROR);
+	}
+	else if (flags->got_width || flags->got_precision)
+	{
+		hex_simple_pad(hex_len, flags, hex);
+	}
+	else
+	{
+		if (flags->sign)
+		{
+			ft_putstr(flags->sign);
+		}
+		ft_putstr(str);
+	}
+	free(str);
+	return (OK);
+}
+
+static size_t	handle_hex(char *hex, t_flags *flags, char spec)
 {
 	size_t pad_len;
 	size_t hex_len;
@@ -23,51 +52,48 @@ static size_t handle_hex(char *hex, t_flags *flags, char specifier, char *prefix
 	{
 		flags->pad_zeroes = TRUE;
 	}
-	hex_handle_pad(flags, prefix, specifier, hex);
-	return (print_count(hex_len, pad_len, flags, prefix, 0));
+	hex_handle_pad(flags, spec, hex);
+	return (print_count(hex_len, pad_len, flags, 0));
 }
 
-static char *assign_prefix(char specifier, t_flags *flags, uintmax_t u_hex)
+static char		*assign_prefix(char specifier, t_flags *flags, uintmax_t u_hex)
 {
-	char *prefix;
-
-	prefix = NULL;
 	if ((flags->force_prefix == TRUE) || specifier == 'p')
 	{
 		if ((specifier == 'x' && u_hex != 0) || (specifier == 'p'))
 		{
-			prefix = "0x";
+			return ("0x");
 		}
 		else if (specifier == 'X' && u_hex != 0)
 		{
-			prefix = "0X";
+			return ("0X");
 		}
 	}
-	return (prefix);
+	return (NULL);
 }
 
-int spec_X(t_format *format, va_list arguments, t_flags *flags)
+int				spec_x(t_format *format, va_list arguments, t_flags *flags)
 {
-	char *str_hex;
-	char *prefix;
-	char specifier;
-	uintmax_t u_hex;
-	int ret;
+	uintmax_t	u_hex;
+	char		*str_hex;
+	char		specifier;
+	int			ret;
 
 	u_hex = unsigned_specifier(arguments, flags, format->string[format->pos]);
-	if ((str_hex = base_convert(u_hex, 16)) == NULL)
+	flags->base = BASE_HEXADECIMAL;
+	if ((str_hex = base_convert(u_hex, BASE_HEXADECIMAL)) == NULL)
 		return (ERROR);
 	specifier = format->string[format->pos];
-	prefix = assign_prefix(specifier, flags, u_hex);
-	ret = handle_hex(str_hex, flags, specifier, prefix);
+	flags->sign = assign_prefix(specifier, flags, u_hex);
+	ret = handle_hex(str_hex, flags, specifier);
 	format->written += ret;
 	format->pos++;
 	free(str_hex);
 	return (ret == ERROR ? ERROR : OK);
 }
 
-int spec_p(t_format *format, va_list arguments, t_flags *flags)
+int				spec_p(t_format *format, va_list arguments, t_flags *flags)
 {
 	flags->length = z;
-	return(spec_X(format, arguments, flags));
+	return (spec_x(format, arguments, flags));
 }

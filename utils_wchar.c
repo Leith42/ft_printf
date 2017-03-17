@@ -6,13 +6,13 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 15:09:26 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/09 15:16:37 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/17 16:15:52 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void ft_putwchar(wint_t wchar)
+void			ft_putwchar(wint_t wchar)
 {
 	if (wchar <= 0x7F)
 	{
@@ -38,7 +38,7 @@ void ft_putwchar(wint_t wchar)
 	}
 }
 
-void ft_putnwstr(wchar_t *wstring, unsigned int max)
+void			ft_putnwstr(wchar_t *wstring, unsigned int max)
 {
 	unsigned int i;
 	unsigned int wide_i;
@@ -53,7 +53,7 @@ void ft_putnwstr(wchar_t *wstring, unsigned int max)
 	}
 }
 
-unsigned int wchar_len(wchar_t wchar)
+unsigned int	wchar_len(wchar_t wchar)
 {
 	if (wchar <= 0x7F)
 	{
@@ -74,14 +74,14 @@ unsigned int wchar_len(wchar_t wchar)
 	return (ERROR);
 }
 
-size_t ft_wstrlen(wchar_t *wstring)
+size_t			ft_wstrlen(wchar_t *wstring)
 {
 	size_t i;
 	size_t wlen;
 
 	i = 0;
 	wlen = 0;
-	while(wstring[i])
+	while (wstring[i])
 	{
 		if (ft_isascii(wstring[i]) == TRUE)
 		{

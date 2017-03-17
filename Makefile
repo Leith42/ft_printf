@@ -6,7 +6,7 @@
 #    By: aazri <aazri@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/17 17:35:54 by aazri             #+#    #+#              #
-#    Updated: 2017/03/09 15:28:01 by aazri            ###   ########.fr        #
+#    Updated: 2017/03/17 16:07:01 by aazri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ SRC =	ft_printf.c \
 		parsing_flags.c \
 		utils.c \
 		utils_wchar.c \
-		valid_format.c \
 		get_func_array.c \
 		get_str_to_print.c \
 		hex_pad.c \

@@ -6,16 +6,16 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 15:07:14 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/09 15:17:40 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/17 16:03:17 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void handle_wstring(t_format *format, va_list arguments, t_flags *flags)
+void	handle_wstring(t_format *format, va_list arguments, t_flags *flags)
 {
-	wchar_t *wstring;
-	size_t len;
+	wchar_t	*wstring;
+	size_t	len;
 
 	if ((wstring = va_arg(arguments, wchar_t *)) == NULL)
 	{
@@ -39,11 +39,11 @@ void handle_wstring(t_format *format, va_list arguments, t_flags *flags)
 	format->pos++;
 }
 
-int spec_s(t_format *format, va_list arguments, t_flags *flags)
+int		spec_s(t_format *format, va_list arguments, t_flags *flags)
 {
-	char specifier;
-	char *s;
-	size_t len;
+	char	specifier;
+	char	*s;
+	size_t	len;
 
 	specifier = format->string[format->pos];
 	if (flags->length == l || specifier == 'S')

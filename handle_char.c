@@ -6,13 +6,13 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 16:03:50 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/15 14:37:38 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/17 16:03:05 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void handle_wchar(t_format *format, va_list arguments, t_flags *flags)
+void	handle_wchar(t_format *format, va_list arguments, t_flags *flags)
 {
 	wchar_t wchar;
 
@@ -29,7 +29,7 @@ void handle_wchar(t_format *format, va_list arguments, t_flags *flags)
 	format->written += MAX(flags->width, wchar_len(wchar));
 }
 
-int spec_c(t_format *format, va_list arguments, t_flags *flags)
+int		spec_c(t_format *format, va_list arguments, t_flags *flags)
 {
 	char spec;
 

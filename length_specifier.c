@@ -6,13 +6,13 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 15:47:06 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/13 15:34:49 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/17 16:06:57 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-intmax_t signed_specifier(va_list arguments, t_flags *flags)
+intmax_t	signed_specifier(va_list arguments, t_flags *flags)
 {
 	intmax_t nb;
 
@@ -34,7 +34,7 @@ intmax_t signed_specifier(va_list arguments, t_flags *flags)
 	return (nb);
 }
 
-uintmax_t unsigned_specifier(va_list arguments, t_flags *flags, char spec)
+uintmax_t	unsigned_specifier(va_list arguments, t_flags *flags, char spec)
 {
 	uintmax_t nb;
 
