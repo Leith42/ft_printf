@@ -6,7 +6,7 @@
 #    By: aazri <aazri@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/17 17:35:54 by aazri             #+#    #+#              #
-#    Updated: 2017/03/09 15:21:30 by aazri            ###   ########.fr        #
+#    Updated: 2017/03/19 14:37:45 by aazri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,16 +34,15 @@ ft_putulnbr.c ft_itoa_base.c ft_utoa_base.c ft_putnstr.c
 OBJ = $(SRC:.c=.o)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -c $(SRC)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
 
 all: $(NAME)
 
 clean:
-	$(RM) $(OBJ)
+	@$(RM) $(OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
