@@ -6,32 +6,11 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 16:07:34 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/17 16:56:31 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/20 19:23:40 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-char	*base_convert(uintmax_t nb, unsigned int base)
-{
-	static const char	digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	char				buffer[12];
-	char				*sortie;
-	size_t				i;
-
-	sortie = NULL;
-	i = 12;
-	if (base < 2 || base > 36)
-		return (NULL);
-	buffer[--i] = '\0';
-	while (nb != 0 || i == 11)
-	{
-		buffer[--i] = digits[nb % base];
-		nb /= base;
-	}
-	sortie = ft_strdup(buffer + i);
-	return (sortie);
-}
 
 void	width_pad(int nb_len, int width, char padwith, char *sign)
 {
@@ -80,7 +59,7 @@ size_t	ft_nbulen(uintmax_t n, unsigned int base)
 	char	*str;
 	size_t	len;
 
-	if ((str = base_convert(n, base)) == NULL)
+	if ((str = ft_utoa_base(n, base)) == NULL)
 		return (ERROR);
 	len = ft_strlen(str);
 	free(str);

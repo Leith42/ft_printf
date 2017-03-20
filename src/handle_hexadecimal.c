@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 14:51:24 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/17 16:45:56 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/20 18:18:11 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,23 @@ static char		*assign_prefix(char specifier, t_flags *flags, uintmax_t u_hex)
 
 int				spec_x(t_format *format, va_list arguments, t_flags *flags)
 {
+	size_t		i;
 	uintmax_t	u_hex;
 	char		*str_hex;
 	char		specifier;
 	int			ret;
 
+	i = 0;
 	u_hex = unsigned_specifier(arguments, flags, format->string[format->pos]);
 	flags->base = BASE_HEXADECIMAL;
-	if ((str_hex = base_convert(u_hex, BASE_HEXADECIMAL)) == NULL)
+	if ((str_hex = ft_utoa_base(u_hex, BASE_HEXADECIMAL)) == NULL)
 		return (ERROR);
+	while (str_hex[i])
+	{
+		if (!(ft_isdigit(str_hex[i])))
+			str_hex[i] += 7;
+		i++;
+	}
 	specifier = format->string[format->pos];
 	flags->sign = assign_prefix(specifier, flags, u_hex);
 	ret = handle_hex(str_hex, flags, specifier);

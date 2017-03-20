@@ -6,7 +6,7 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 17:22:19 by leith             #+#    #+#             */
-/*   Updated: 2017/03/17 16:44:24 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/20 14:48:32 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void		width_pad(int nb_len, int width, char padwith, char *sign);
 void		ft_putnstr(char *s, size_t max);
 void		print_base(uintmax_t nb, unsigned int base);
 int			print_count(size_t n_len, size_t pad_len, t_flags *f, uintmax_t nb);
-char		*base_convert(uintmax_t nb, unsigned int base);
 char		*get_str_to_print(char *hex, char specifier);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 13:18:51 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/17 16:15:26 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/20 20:07:12 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,51 +29,52 @@ void	parse_flags(t_format *f, t_flags *flags)
 	|| f->string[f->pos] == ' ')
 	{
 		if (f->string[f->pos] == '#')
-			flags->force_prefix = 1;
+			flags->force_prefix = TRUE;
 		else if (f->string[f->pos] == '0')
-			flags->pad_zeroes = 1;
+			flags->pad_zeroes = TRUE;
 		else if (f->string[f->pos] == '-')
-			flags->right_pad = 1;
+			flags->right_pad = TRUE;
 		else if (f->string[f->pos] == '+')
-			flags->force_sign = 1;
+			flags->force_sign = TRUE;
 		else if (f->string[f->pos] == ' ')
-			flags->blank_sign = 1;
+			flags->blank_sign = TRUE;
 		f->pos++;
-		if (flags->right_pad)
-			flags->pad_zeroes = 0;
+		if (flags->right_pad == TRUE)
+			flags->pad_zeroes = FALSE;
 		parse_flags(f, flags);
 	}
 }
 
 void	parse_width(t_format *f, va_list list, t_flags *flags)
 {
-	int	got;
+	int	width_from_arg;
 
-	flags->width = 0;
 	while (f->string[f->pos] == '*' || ft_isdigit(f->string[f->pos]))
 	{
 		if (f->string[f->pos] == '*')
 		{
 			f->pos++;
-			got = va_arg(list, int);
-			if (got < 0)
-				flags->right_pad = 1;
-			flags->width = got < 0 ? -got : got;
-			flags->got_width = 1;
+			if ((width_from_arg = va_arg(list, int)) >= 0)
+			{
+				flags->got_width = 1;
+				flags->width = width_from_arg;
+			}
 		}
-		if (ft_isdigit(f->string[f->pos]))
+		else
 		{
-			flags->got_width = 1;
-			flags->width = 0;
 			while (ft_isdigit(f->string[f->pos]))
-				flags->width = flags->width * 10 + (f->string[f->pos++] - '0');
+			{
+				flags->width = flags->width * 10 + (f->string[f->pos] - '0');
+				f->pos++;
+			}
+			flags->got_width = 1;
 		}
 	}
 }
 
 void	parse_precision(t_format *f, va_list list, t_flags *fl)
 {
-	int prec;
+	int prec_from_arg;
 
 	if (f->string[f->pos] == '.')
 	{
@@ -81,10 +82,10 @@ void	parse_precision(t_format *f, va_list list, t_flags *fl)
 		if (f->string[f->pos] == '*')
 		{
 			f->pos++;
-			if ((prec = va_arg(list, int)) >= 0)
+			if ((prec_from_arg = va_arg(list, int)) >= 0)
 			{
 				fl->got_precision = 1;
-				fl->precision = prec;
+				fl->precision = prec_from_arg;
 			}
 		}
 		else

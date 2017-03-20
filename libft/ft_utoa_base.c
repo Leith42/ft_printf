@@ -6,7 +6,7 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/31 18:30:17 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/17 16:49:41 by aazri            ###   ########.fr       */
+/*   Updated: 2017/03/20 17:41:11 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,23 @@
 
 char	*ft_utoa_base(uintmax_t n, unsigned int base)
 {
-	char		nb[12];
-	uintmax_t	tmp;
-	size_t		i;
+	char		buff[24];
+	char		*str;
+	int			i;
+	uintmax_t	n_tmp;
 
-	i = 12;
-	if (n <= 0)
+	i = 0;
+	n_tmp = n;
+	while (n_tmp)
 	{
-		nb[--i] = '0' - (n % base);
-		n /= -base;
+		buff[i++] = n_tmp % base + '0';
+		n_tmp = n_tmp / base;
 	}
-	while (n != 0)
-	{
-		tmp = n % base;
-		if (tmp < 10)
-			nb[--i] = '0' + tmp;
-		else
-			nb[--i] = '7' + tmp;
-		n /= base;
-	}
-	return (ft_strndup(nb + i, 12 - i));
+	if (!(str = ft_memalloc(i + 1)))
+		return (NULL);
+	if (n == 0)
+		str[0] = '0';
+	while (--i >= 0)
+		str[n_tmp++] = buff[i];
+	return (str);
 }

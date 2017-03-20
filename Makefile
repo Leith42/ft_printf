@@ -6,7 +6,7 @@
 #    By: aazri <aazri@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/17 17:35:54 by aazri             #+#    #+#              #
-#    Updated: 2017/03/20 13:44:14 by aazri            ###   ########.fr        #
+#    Updated: 2017/03/20 17:50:15 by aazri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ OBJ_LIB =	$(LIB_PATH)ft_strlen.o \
 			$(LIB_PATH)ft_atoi.o \
 			$(LIB_PATH)ft_isdigit.o \
 			$(LIB_PATH)ft_itoa_base.o \
+			$(LIB_PATH)ft_utoa_base.o \
 			$(LIB_PATH)ft_isascii.o \
 			$(LIB_PATH)ft_strcpy.o \
 			$(LIB_PATH)ft_strcat.o \
@@ -52,6 +53,7 @@ OBJ_LIB =	$(LIB_PATH)ft_strlen.o \
 			$(LIB_PATH)ft_putnstr.o \
 			$(LIB_PATH)ft_strncpy.o \
 			$(LIB_PATH)ft_memset.o \
+			$(LIB_PATH)ft_memalloc.o \
 
 OBJ_SRC = $(SRC:.c=.o)
 
