@@ -11,6 +11,7 @@
 # **************************************************************************** #
 
 NAME = libftprintf.a
+MAKEFLAGS = -s
 CC = gcc
 INCLUDE = -Ilibft -Iinclude
 CFLAGS = -Wall -Wextra -Werror $(INCLUDE)
@@ -58,20 +59,22 @@ OBJ_LIB =	$(LIB_PATH)ft_strlen.o \
 OBJ_SRC = $(SRC:.c=.o)
 
 $(NAME): $(OBJ_SRC)
-	@make -C $(LIB_PATH)
-	#@$(CC) $(CFLAGS) -c $(SRC)
-	@ar rc $(NAME) $(OBJ_SRC) $(OBJ_LIB)
-	@ranlib $(NAME)
+	make -C $(LIB_PATH)
+	ar rc $(NAME) $(OBJ_SRC) $(OBJ_LIB)
+	ranlib $(NAME)
+	echo "libftprintf.a compiled with success."
 
 all: $(NAME)
 
 clean:
-	@make -C $(LIB_PATH) clean
-	@$(RM) $(OBJ_SRC)
+	make -C $(LIB_PATH) clean
+	$(RM) $(OBJ_SRC)
+	echo "objects cleaned with success."
 
 fclean: clean
-	@make -C $(LIB_PATH) fclean
-	@$(RM) $(NAME)
+	make -C $(LIB_PATH) fclean
+	$(RM) $(NAME)
+	echo "lib cleaned with success."
 
 re: fclean all
 

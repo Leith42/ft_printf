@@ -12,6 +12,12 @@
 
 #include "ft_printf.h"
 
+// 11000010 10101100
+// 11000010 00000010
+//
+//
+//
+
 void			ft_putwchar(wint_t wchar)
 {
 	if (wchar <= 0x7F)
@@ -53,7 +59,7 @@ void			ft_putnwstr(wchar_t *wstring, unsigned int max)
 	}
 }
 
-unsigned int	wchar_len(wchar_t wchar)
+int	wchar_len(wchar_t wchar)
 {
 	if (wchar <= 0x7F)
 	{

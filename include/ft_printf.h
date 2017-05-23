@@ -105,7 +105,7 @@ t_func		*get_func_array(void);
 /*
 ** Utils for wide characters
 */
-unsigned	wchar_len(wchar_t wchar);
+int			wchar_len(wchar_t wchar);
 void		ft_putwchar(wint_t wchar);
 void		ft_putnwstr(wchar_t *wstring, unsigned int max);
 size_t		ft_wstrlen(wchar_t *wstring);

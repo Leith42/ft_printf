@@ -31,7 +31,7 @@ static int	handle_specifier(t_format *format, va_list args, t_flags *flags)
 				free(f_tab);
 				return (ERROR);
 			}
-			break ;
+			break;
 		}
 		i++;
 	}

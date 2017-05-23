@@ -36,3 +36,5 @@
 test
 
 .clang_complete
+.idea/
+cmake-build-debug/
