@@ -29,18 +29,18 @@ void	parse_flags(t_format *f, t_flags *flags)
 	|| f->string[f->pos] == ' ')
 	{
 		if (f->string[f->pos] == '#')
-			flags->force_prefix = TRUE;
+			flags->force_prefix = true;
 		else if (f->string[f->pos] == '0')
-			flags->pad_zeroes = TRUE;
+			flags->pad_zeroes = true;
 		else if (f->string[f->pos] == '-')
-			flags->right_pad = TRUE;
+			flags->right_pad = true;
 		else if (f->string[f->pos] == '+')
-			flags->force_sign = TRUE;
+			flags->force_sign = true;
 		else if (f->string[f->pos] == ' ')
-			flags->blank_sign = TRUE;
+			flags->blank_sign = true;
 		f->pos++;
-		if (flags->right_pad == TRUE)
-			flags->pad_zeroes = FALSE;
+		if (flags->right_pad == true)
+			flags->pad_zeroes = false;
 		parse_flags(f, flags);
 	}
 }
@@ -56,7 +56,7 @@ void	parse_width(t_format *f, va_list list, t_flags *flags)
 			f->pos++;
 			if ((width_from_arg = va_arg(list, int)) >= 0)
 			{
-				flags->got_width = 1;
+				flags->got_width = true;
 				flags->width = width_from_arg;
 			}
 		}
@@ -67,7 +67,7 @@ void	parse_width(t_format *f, va_list list, t_flags *flags)
 				flags->width = flags->width * 10 + (f->string[f->pos] - '0');
 				f->pos++;
 			}
-			flags->got_width = 1;
+			flags->got_width = true;
 		}
 	}
 }
@@ -84,7 +84,7 @@ void	parse_precision(t_format *f, va_list list, t_flags *fl)
 			f->pos++;
 			if ((prec_from_arg = va_arg(list, int)) >= 0)
 			{
-				fl->got_precision = 1;
+				fl->got_precision = true;
 				fl->precision = prec_from_arg;
 			}
 		}
@@ -95,7 +95,7 @@ void	parse_precision(t_format *f, va_list list, t_flags *fl)
 				fl->precision = fl->precision * 10 + (f->string[f->pos] - '0');
 				f->pos++;
 			}
-			fl->got_precision = 1;
+			fl->got_precision = true;
 		}
 	}
 }

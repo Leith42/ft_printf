@@ -22,16 +22,16 @@ void	handle_wstring(t_format *format, va_list arguments, t_flags *flags)
 		wstring = L"(null)";
 	}
 	len = ft_wstrlen(wstring);
-	if (flags->got_precision == TRUE && flags->precision < len)
+	if (flags->got_precision == true && flags->precision < len)
 	{
 		len = flags->precision;
 	}
-	if (flags->got_width == TRUE && flags->right_pad == FALSE)
+	if (flags->got_width == true && flags->right_pad == false)
 	{
 		width_pad(len, flags->width, flags->pad_zeroes ? '0' : ' ', 0);
 	}
 	ft_putnwstr(wstring, len);
-	if (flags->got_width == TRUE && flags->right_pad == TRUE)
+	if (flags->got_width == true && flags->right_pad == true)
 	{
 		width_pad(len, flags->width, ' ', 0);
 	}
@@ -55,12 +55,12 @@ int		spec_s(t_format *format, va_list arguments, t_flags *flags)
 		if ((s = va_arg(arguments, char *)) == NULL)
 			s = "(null)";
 		len = ft_strlen(s);
-		if (flags->got_precision == TRUE && flags->precision < len)
+		if (flags->got_precision == true && flags->precision < len)
 			len = flags->precision;
-		if (flags->got_width == TRUE && flags->right_pad == FALSE)
+		if (flags->got_width == true && flags->right_pad == false)
 			width_pad(len, flags->width, flags->pad_zeroes ? '0' : ' ', 0);
 		ft_putnstr(s, len);
-		if (flags->got_width == TRUE && flags->right_pad == TRUE)
+		if (flags->got_width == true && flags->right_pad == true)
 			width_pad(len, flags->width, ' ', 0);
 		format->written += MAX(flags->width, len);
 		format->pos++;

@@ -12,21 +12,23 @@
 
 #include "ft_printf.h"
 
-static void	hex_left_double_pad(size_t h_len, t_flags *flags, char *h, char *s)
+void	hex_left_double_pad(size_t hex_len, t_flags *flags, char *h)
 {
+	bool zero;
 	unsigned int precision;
 	unsigned int width;
 
-	precision = adapt_precision(flags, h_len);
-	width = adapt_width(flags, precision, ft_atoi(h), &h_len);
-	if (precision == 0 && ft_atoi(h) == 0)
+	zero = h[0] == 0x30 && h[1] == '\0' ? 0 : 1;
+	precision = adapt_precision(flags, hex_len);
+	width = adapt_width(flags, precision, zero, &hex_len);
+	if (precision == 0 && zero == 0)
 	{
-		h_len = 0;
-		s = NULL;
+		h = NULL;
+		hex_len = 0;
 	}
-	width_pad(h_len, width, ' ', flags->sign);
+	width_pad(hex_len, width, ' ', flags->sign);
 	width_pad(0, precision, '0', 0);
-	ft_putstr(s);
+	ft_putstr(h);
 }
 
 static void	hex_right_pad(size_t hex_len, t_flags *flags, char *hex)
@@ -44,31 +46,24 @@ static void	hex_right_pad(size_t hex_len, t_flags *flags, char *hex)
 	width_pad(hex_len, flags->width - prefix_len, pad_with, 0);
 }
 
-int			hex_double_pad(size_t hex_len, t_flags *flags, char spec, char *hex)
+int			hex_double_pad(size_t hex_len, t_flags *flags, char *to_print)
 {
-	char *str;
-
-	if ((str = get_str_to_print(hex, spec)) == NULL)
-	{
-		return (ERROR);
-	}
 	if (flags->width > flags->precision)
 	{
-		if (flags->right_pad == TRUE)
+		if (flags->right_pad == true)
 		{
-			hex_right_pad(hex_len, flags, hex);
+			hex_right_pad(hex_len, flags, to_print);
 		}
 		else
 		{
-			hex_left_double_pad(hex_len, flags, hex, str);
+			hex_left_double_pad(hex_len, flags, to_print);
 		}
 	}
 	else
 	{
 		width_pad(hex_len, flags->precision, '0', flags->sign);
-		ft_putstr(str);
+		ft_putstr(to_print);
 	}
-	free(str);
 	return (OK);
 }
 
@@ -77,7 +72,7 @@ static void	hex_left_pad(size_t hex_len, t_flags *flags, char *hex)
 	size_t prefix_len;
 
 	prefix_len = ft_strlen(flags->sign);
-	if (flags->pad_zeroes == TRUE)
+	if (flags->pad_zeroes == true)
 	{
 		if (flags->sign)
 		{
@@ -99,9 +94,9 @@ static void	hex_left_pad(size_t hex_len, t_flags *flags, char *hex)
 
 void		hex_simple_pad(size_t hex_len, t_flags *flags, char *hex)
 {
-	if (flags->got_width == TRUE)
+	if (flags->got_width == true)
 	{
-		if (flags->right_pad == TRUE)
+		if (flags->right_pad == true)
 		{
 			hex_right_pad(hex_len, flags, hex);
 		}
@@ -110,7 +105,7 @@ void		hex_simple_pad(size_t hex_len, t_flags *flags, char *hex)
 			hex_left_pad(hex_len, flags, hex);
 		}
 	}
-	else if (flags->got_precision == TRUE)
+	else if (flags->got_precision == true)
 	{
 		if (flags->sign)
 		{

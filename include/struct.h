@@ -44,6 +44,7 @@ typedef struct	s_format
 	const char	*string;
 	size_t		pos;
 	size_t		written;
+	bool		got_color;
 }				t_format;
 
 typedef struct	s_func

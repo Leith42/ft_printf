@@ -59,25 +59,17 @@ void			ft_putnwstr(wchar_t *wstring, unsigned int max)
 	}
 }
 
-int	wchar_len(wchar_t wchar)
+unsigned int	wchar_len(wchar_t wchar)
 {
 	if (wchar <= 0x7F)
-	{
 		return (1);
-	}
 	else if (wchar <= 0x7FF)
-	{
 		return (2);
-	}
 	else if (wchar <= 0xFFFF)
-	{
 		return (3);
-	}
 	else if (wchar <= 0x10FFFF)
-	{
 		return (4);
-	}
-	return (ERROR);
+	return (0);
 }
 
 size_t			ft_wstrlen(wchar_t *wstring)
@@ -89,7 +81,7 @@ size_t			ft_wstrlen(wchar_t *wstring)
 	wlen = 0;
 	while (wstring[i])
 	{
-		if (ft_isascii(wstring[i]) == TRUE)
+		if (ft_isascii(wstring[i]) == true)
 		{
 			wlen++;
 		}

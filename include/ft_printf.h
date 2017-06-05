@@ -28,14 +28,15 @@
 # define ABS(x) ((x < 0)) ? -(x) : (x)
 # define MIN(x, y) ((x < y)) ? (x) : (y)
 # define MAX(x, y) ((x > y)) ? (x) : (y)
-# define FALSE 0
-# define TRUE 1
-# define OK TRUE
+# define OK true
 # define ERROR -1
 # define BASE_OCTAL 8
 # define BASE_DECIMAL 10
 # define BASE_HEXADECIMAL 16
-
+# define COLOR_RED "\x1b[31m"
+# define COLOR_GREEN "\x1b[32m"
+# define COLOR_BLUE "\x1b[34m"
+# define COLOR_RESET "\x1b[0m"
 /*
 ** Main
 */
@@ -62,7 +63,7 @@ unsigned	adapt_width(t_flags *f, size_t preci, uintmax_t nb, size_t *nb_len);
 unsigned	adapt_precision(t_flags *flags, size_t nb_len);
 size_t		ft_nbulen(unsigned long n, unsigned int base);
 size_t		ft_nblen(long n, unsigned int base);
-void		width_pad(int nb_len, int width, char padwith, char *sign);
+void		width_pad(size_t nb_len, size_t width, char padwith, char *sign);
 void		ft_putnstr(char *s, size_t max);
 void		print_base(uintmax_t nb, unsigned int base);
 int			print_count(size_t n_len, size_t pad_len, t_flags *f, uintmax_t nb);
@@ -89,8 +90,10 @@ void		handle_pad(size_t nb_len, t_flags *flags, uintmax_t nb);
 ** Handle base 16 integer
 */
 int			hex_handle_pad(t_flags *flags, char specifier, char *hex);
-int			hex_double_pad(size_t h_len, t_flags *flags, char spec, char *hex);
+void		hex_left_double_pad(size_t h_len, t_flags *flags, char *h);
 void		hex_simple_pad(size_t h_len, t_flags *flags, char *hex);
+int			hex_double_pad(size_t hex_len, t_flags *flags, char *to_print);
+
 /*
 ** Handle length
 */
@@ -105,9 +108,13 @@ t_func		*get_func_array(void);
 /*
 ** Utils for wide characters
 */
-int			wchar_len(wchar_t wchar);
+unsigned	wchar_len(wchar_t wchar);
 void		ft_putwchar(wint_t wchar);
 void		ft_putnwstr(wchar_t *wstring, unsigned int max);
 size_t		ft_wstrlen(wchar_t *wstring);
+/*
+** Handle color
+*/
+int			handle_color(t_format *format);
 
 #endif

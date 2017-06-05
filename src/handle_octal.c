@@ -14,7 +14,7 @@
 
 static char	*assign_prefix(t_flags *flags)
 {
-	if (flags->force_prefix == TRUE && flags->precision == 0)
+	if (flags->force_prefix == true && flags->precision == 0)
 		return ("0");
 	return (NULL);
 }

@@ -17,12 +17,12 @@ void	handle_wchar(t_format *format, va_list arguments, t_flags *flags)
 	wchar_t wchar;
 
 	wchar = va_arg(arguments, wint_t);
-	if (flags->got_width && flags->right_pad == FALSE)
+	if (flags->got_width && flags->right_pad == false)
 	{
 		width_pad(1, flags->width, flags->pad_zeroes ? '0' : ' ', 0);
 	}
 	ft_putwchar(wchar);
-	if (flags->got_width && flags->right_pad == TRUE)
+	if (flags->got_width && flags->right_pad == true)
 	{
 		width_pad(1, flags->width, ' ', 0);
 	}
@@ -40,12 +40,12 @@ int		spec_c(t_format *format, va_list arguments, t_flags *flags)
 	}
 	else
 	{
-		if (flags->got_width && flags->right_pad == FALSE)
+		if (flags->got_width && flags->right_pad == false)
 		{
 			width_pad(1, flags->width, flags->pad_zeroes ? '0' : ' ', 0);
 		}
 		spec != 'c' ? ft_putchar(spec) : ft_putchar(va_arg(arguments, int));
-		if (flags->got_width && flags->right_pad == TRUE)
+		if (flags->got_width && flags->right_pad == true)
 		{
 			width_pad(1, flags->width, ' ', 0);
 		}

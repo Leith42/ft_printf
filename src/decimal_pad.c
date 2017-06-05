@@ -31,7 +31,7 @@ static void	left_pad(size_t nb_len, t_flags *flags, uintmax_t nb)
 	unsigned int	sign_len;
 	char			pad_with;
 
-	if (flags->got_precision == TRUE && flags->got_width == TRUE)
+	if (flags->got_precision == true && flags->got_width == true)
 	{
 		precision = adapt_precision(flags, nb_len);
 		width = adapt_width(flags, precision, nb, &nb_len);
@@ -55,7 +55,7 @@ static void	double_pad(size_t nb_len, t_flags *flags, uintmax_t nb)
 {
 	if (flags->width > flags->precision)
 	{
-		if (flags->right_pad == TRUE)
+		if (flags->right_pad == true)
 		{
 			right_pad(nb_len, flags, nb);
 		}
@@ -73,9 +73,9 @@ static void	double_pad(size_t nb_len, t_flags *flags, uintmax_t nb)
 
 static void	simple_pad(size_t nb_len, t_flags *flags, uintmax_t nb)
 {
-	if (flags->got_width == TRUE)
+	if (flags->got_width == true)
 	{
-		if (flags->right_pad == TRUE)
+		if (flags->right_pad == true)
 		{
 			right_pad(nb_len, flags, nb);
 		}
@@ -84,7 +84,7 @@ static void	simple_pad(size_t nb_len, t_flags *flags, uintmax_t nb)
 			left_pad(nb_len, flags, nb);
 		}
 	}
-	else if (flags->got_precision == TRUE)
+	else if (flags->got_precision == true)
 	{
 		if (nb != 0)
 		{

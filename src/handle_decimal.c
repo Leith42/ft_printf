@@ -19,7 +19,7 @@ unsigned		adapt_width(t_flags *f, size_t preci, uintmax_t n, size_t *nlen)
 	width = f->width;
 	width -= preci;
 	width -= ft_strlen(f->sign);
-	if (n == 0 && f->got_precision && preci == 0)
+	if (n == 0 && f->got_precision == true && preci == 0)
 	{
 		*nlen = 0;
 	}
@@ -53,9 +53,9 @@ size_t			handle_integer(uintmax_t nb, t_flags *flags)
 	{
 		nb_len--;
 	}
-	if (flags->got_precision == TRUE && flags->got_width == FALSE)
+	if (flags->got_precision == true && flags->got_width == false)
 	{
-		flags->pad_zeroes = TRUE;
+		flags->pad_zeroes = true;
 	}
 	handle_pad(nb_len, flags, nb);
 	return (print_count(nb_len, pad_len, flags, nb));
@@ -71,15 +71,12 @@ int				spec_d(t_format *format, va_list arguments, t_flags *flags)
 	}
 	flags->base = BASE_DECIMAL;
 	integer = signed_specifier(arguments, flags);
-	if (integer < 0 || flags->force_sign == TRUE || flags->blank_sign == TRUE)
-	{
-		if (integer >= 0 && flags->force_sign == TRUE)
-			flags->sign = "+";
-		else if (integer < 0)
-			flags->sign = "-";
-		else if (flags->blank_sign == TRUE)
-			flags->sign = " ";
-	}
+	if (integer >= 0 && flags->force_sign == true)
+		flags->sign = "+";
+	else if (integer < 0)
+		flags->sign = "-";
+	else if (flags->blank_sign == true)
+		flags->sign = " ";
 	format->written += handle_integer(ABS(integer), flags);
 	format->pos++;
 	return (OK);

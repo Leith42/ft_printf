@@ -14,25 +14,8 @@
 
 char	*get_str_to_print(char *hex, char specifier)
 {
-	char *str;
-
-	if ((str = malloc(sizeof(char))) == NULL)
-	{
-		return (NULL);
-	}
 	if (specifier == 'x' || specifier == 'p')
-	{
-		if ((str = ft_strjoin(str, ft_strtolower(hex))) == NULL)
-		{
-			return (NULL);
-		}
-	}
-	else if (specifier == 'X')
-	{
-		if ((str = ft_strjoin(str, hex)) == NULL)
-		{
-			return (NULL);
-		}
-	}
-	return (str);
+		return (ft_strdup(ft_strtolower(hex)));
+	else
+		return (ft_strdup(hex));
 }

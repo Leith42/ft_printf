@@ -20,12 +20,12 @@ int				hex_handle_pad(t_flags *flags, char spec, char *hex)
 	if ((str = get_str_to_print(hex, spec)) == NULL)
 		return (ERROR);
 	hex_len = ft_strlen(str);
-	if (flags->got_width && flags->got_precision)
+	if (flags->got_width == true && flags->got_precision == true)
 	{
-		if ((hex_double_pad(hex_len, flags, spec, hex)) == ERROR)
+		if (hex_double_pad(hex_len, flags, str) == ERROR)
 			return (ERROR);
 	}
-	else if (flags->got_width || flags->got_precision)
+	else if (flags->got_width == true || flags->got_precision == true)
 	{
 		hex_simple_pad(hex_len, flags, hex);
 	}
@@ -38,7 +38,7 @@ int				hex_handle_pad(t_flags *flags, char spec, char *hex)
 		ft_putstr(str);
 	}
 	free(str);
-	return (OK);
+	return (true);
 }
 
 static size_t	handle_hex(char *hex, t_flags *flags, char spec)
@@ -48,26 +48,23 @@ static size_t	handle_hex(char *hex, t_flags *flags, char spec)
 
 	hex_len = ft_strlen(hex);
 	pad_len = MAX(flags->width, flags->precision);
-	if (flags->got_precision == TRUE && flags->got_width == FALSE)
+	if (flags->got_precision == true && flags->got_width == false)
 	{
-		flags->pad_zeroes = TRUE;
+		flags->pad_zeroes = true;
 	}
-	hex_handle_pad(flags, spec, hex);
+	if (hex_handle_pad(flags, spec, hex) == ERROR)
+		return (ERROR);
 	return (print_count(hex_len, pad_len, flags, 0));
 }
 
 static char		*assign_prefix(char specifier, t_flags *flags, uintmax_t u_hex)
 {
-	if ((flags->force_prefix == TRUE) || specifier == 'p')
+	if ((flags->force_prefix == true) || specifier == 'p')
 	{
 		if ((specifier == 'x' && u_hex != 0) || (specifier == 'p'))
-		{
 			return ("0x");
-		}
 		else if (specifier == 'X' && u_hex != 0)
-		{
 			return ("0X");
-		}
 	}
 	return (NULL);
 }
@@ -94,9 +91,9 @@ int				spec_x(t_format *format, va_list arguments, t_flags *flags)
 	specifier = format->string[format->pos];
 	flags->sign = assign_prefix(specifier, flags, u_hex);
 	ret = handle_hex(str_hex, flags, specifier);
+	free(str_hex);
 	format->written += ret;
 	format->pos++;
-	free(str_hex);
 	return (ret == ERROR ? ERROR : OK);
 }
 

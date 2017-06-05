@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void	width_pad(int nb_len, int width, char padwith, char *sign)
+void	width_pad(size_t nb_len, size_t width, char padwith, char *sign)
 {
 	if (sign && padwith == '0')
 	{

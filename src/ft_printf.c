@@ -57,9 +57,13 @@ static int	browser(t_format *format, va_list arguments, t_flags *flags)
 		}
 		else
 		{
-			ft_putchar(format->string[format->pos]);
-			format->pos++;
-			format->written++;
+			if (format->string[format->pos] == '{' && handle_color(format) == true);
+			else
+			{
+				ft_putchar(format->string[format->pos]);
+				format->pos++;
+				format->written++;
+			}
 		}
 	}
 	return (OK);

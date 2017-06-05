@@ -14,7 +14,7 @@
 
 int	hex_print_count(size_t nb_len, size_t pad_len, t_flags *flags)
 {
-	if (flags->got_width == TRUE || flags->got_precision == TRUE)
+	if (flags->got_width == true || flags->got_precision == true)
 	{
 		if (pad_len == flags->precision && pad_len > nb_len)
 			return (pad_len + ft_strlen(flags->sign));
@@ -31,7 +31,7 @@ int	print_count(size_t nb_len, size_t pad_len, t_flags *flags, uintmax_t nb)
 	char *prefix;
 
 	prefix = flags->sign;
-	if (flags->got_width == TRUE || flags->got_precision == TRUE)
+	if (flags->got_width == true || flags->got_precision == true)
 	{
 		if (flags->width > 0 || flags->precision > 0)
 		{
