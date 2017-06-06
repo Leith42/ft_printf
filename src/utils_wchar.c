@@ -26,21 +26,21 @@ void			ft_putwchar(wint_t wchar)
 	}
 	else if (wchar <= 0x7FF)
 	{
-		ft_putchar((wchar >> 6) + 0xC0);
-		ft_putchar((wchar & 0x3F) + 0x80);
+		ft_putchar((wchar >> 6) | 0xC0);
+		ft_putchar((wchar & 0x3F) | 0x80);
 	}
 	else if (wchar <= 0xFFFF)
 	{
-		ft_putchar((wchar >> 12) + 0xE0);
-		ft_putchar(((wchar >> 6) & 0x3F) + 0x80);
-		ft_putchar((wchar & 0x3F) + 0x80);
+		ft_putchar((wchar >> 12) | 0xE0);
+		ft_putchar(((wchar >> 6) & 0x3F) | 0x80);
+		ft_putchar((wchar & 0x3F) | 0x80);
 	}
 	else if (wchar <= 0x10FFFF)
 	{
-		ft_putchar((wchar >> 18) + 0xF0);
-		ft_putchar(((wchar >> 12) & 0x3F) + 0x80);
-		ft_putchar(((wchar >> 6) & 0x3F) + 0x80);
-		ft_putchar((wchar & 0x3F) + 0x80);
+		ft_putchar((wchar >> 18) | 0xF0);
+		ft_putchar(((wchar >> 12) & 0x3F) | 0x80);
+		ft_putchar(((wchar >> 6) & 0x3F) | 0x80);
+		ft_putchar((wchar & 0x3F) | 0x80);
 	}
 }
 
