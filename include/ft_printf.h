@@ -6,7 +6,7 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 17:22:19 by leith             #+#    #+#             */
-/*   Updated: 2017/03/20 14:48:32 by aazri            ###   ########.fr       */
+/*   Updated: 2017/06/07 16:31:55 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define COLOR_GREEN "\x1b[32m"
 # define COLOR_BLUE "\x1b[34m"
 # define COLOR_RESET "\x1b[0m"
+
 /*
 ** Main
 */

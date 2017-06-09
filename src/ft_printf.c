@@ -6,7 +6,7 @@
 /*   By: leith <leith@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 16:26:24 by leith             #+#    #+#             */
-/*   Updated: 2017/03/20 18:11:06 by aazri            ###   ########.fr       */
+/*   Updated: 2017/06/07 16:21:37 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	handle_specifier(t_format *format, va_list args, t_flags *flags)
 				free(f_tab);
 				return (ERROR);
 			}
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -39,6 +39,13 @@ static int	handle_specifier(t_format *format, va_list args, t_flags *flags)
 		f_tab[0].ptrfunc(format, args, flags);
 	free(f_tab);
 	return (OK);
+}
+
+static void	print_char(t_format *format)
+{
+	ft_putchar(format->string[format->pos]);
+	format->pos++;
+	format->written++;
 }
 
 static int	browser(t_format *format, va_list arguments, t_flags *flags)
@@ -55,16 +62,13 @@ static int	browser(t_format *format, va_list arguments, t_flags *flags)
 					return (ERROR);
 			}
 		}
-		else
+		else if (format->string[format->pos] == '{')
 		{
-			if (format->string[format->pos] == '{' && handle_color(format) == true);
-			else
-			{
-				ft_putchar(format->string[format->pos]);
-				format->pos++;
-				format->written++;
-			}
+			if (handle_color(format) == false)
+				print_char(format);
 		}
+		else
+			print_char(format);
 	}
 	return (OK);
 }

@@ -39,4 +39,4 @@ test
 .idea/
 cmake-build-debug/
 CMakeLists.txt
-src/main.c
+*.DS_Store

@@ -6,17 +6,17 @@
 /*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 14:03:05 by aazri             #+#    #+#             */
-/*   Updated: 2017/03/17 16:06:46 by aazri            ###   ########.fr       */
+/*   Updated: 2017/06/07 16:27:24 by aazri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	hex_left_double_pad(size_t hex_len, t_flags *flags, char *h)
+void				hex_left_double_pad(size_t hex_len, t_flags *flags, char *h)
 {
-	bool zero;
-	unsigned int precision;
-	unsigned int width;
+	unsigned int	precision;
+	unsigned int	width;
+	bool			zero;
 
 	zero = h[0] == 0x30 && h[1] == '\0' ? 0 : 1;
 	precision = adapt_precision(flags, hex_len);
@@ -31,7 +31,7 @@ void	hex_left_double_pad(size_t hex_len, t_flags *flags, char *h)
 	ft_putstr(h);
 }
 
-static void	hex_right_pad(size_t hex_len, t_flags *flags, char *hex)
+static void			hex_right_pad(size_t hex_len, t_flags *flags, char *hex)
 {
 	char			pad_with;
 	unsigned int	prefix_len;
@@ -46,28 +46,28 @@ static void	hex_right_pad(size_t hex_len, t_flags *flags, char *hex)
 	width_pad(hex_len, flags->width - prefix_len, pad_with, 0);
 }
 
-int			hex_double_pad(size_t hex_len, t_flags *flags, char *to_print)
+int					hex_double_pad(size_t hex_len, t_flags *flags, char *print)
 {
 	if (flags->width > flags->precision)
 	{
 		if (flags->right_pad == true)
 		{
-			hex_right_pad(hex_len, flags, to_print);
+			hex_right_pad(hex_len, flags, print);
 		}
 		else
 		{
-			hex_left_double_pad(hex_len, flags, to_print);
+			hex_left_double_pad(hex_len, flags, print);
 		}
 	}
 	else
 	{
 		width_pad(hex_len, flags->precision, '0', flags->sign);
-		ft_putstr(to_print);
+		ft_putstr(print);
 	}
 	return (OK);
 }
 
-static void	hex_left_pad(size_t hex_len, t_flags *flags, char *hex)
+static void			hex_left_pad(size_t hex_len, t_flags *flags, char *hex)
 {
 	size_t prefix_len;
 
@@ -92,7 +92,7 @@ static void	hex_left_pad(size_t hex_len, t_flags *flags, char *hex)
 	}
 }
 
-void		hex_simple_pad(size_t hex_len, t_flags *flags, char *hex)
+void				hex_simple_pad(size_t hex_len, t_flags *flags, char *hex)
 {
 	if (flags->got_width == true)
 	{

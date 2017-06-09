@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_color.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aazri <aazri@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/06/07 15:55:17 by aazri             #+#    #+#             */
+/*   Updated: 2017/06/07 16:11:06 by aazri            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-static int	handle_eoc(t_format *format, const char *s)
+int	handle_eoc(t_format *format, const char *s)
 {
 	if (s[0] == '{' && s[1] == 'E' && s[2] == 'O' && s[3] == 'C' && s[4] == '}')
 	{
@@ -8,12 +20,11 @@ static int	handle_eoc(t_format *format, const char *s)
 		format->pos += 5;
 		format->got_color = false;
 		return (true);
-
 	}
 	return (false);
 }
 
-static int	red_checker(t_format *format, const char *s)
+int	red_checker(t_format *format, const char *s)
 {
 	if (s[0] == '{' && s[1] == 'R' && s[2] == 'E' && s[3] == 'D' && s[4] == '}')
 	{
@@ -25,10 +36,10 @@ static int	red_checker(t_format *format, const char *s)
 	return (false);
 }
 
-static int	green_checker(t_format *format, const char *s)
+int	green_checker(t_format *format, const char *s)
 {
 	if (s[0] == '{' && s[1] == 'G' && s[2] == 'R' &&
-			 s[3] == 'E' && s[4] == 'E' && s[5] == 'N' && s[6] == '}')
+			s[3] == 'E' && s[4] == 'E' && s[5] == 'N' && s[6] == '}')
 	{
 		ft_putstr(COLOR_GREEN);
 		format->pos += 7;
@@ -38,9 +49,10 @@ static int	green_checker(t_format *format, const char *s)
 	return (false);
 }
 
-static int	blue_checker(t_format *format, const char *s)
+int	blue_checker(t_format *format, const char *s)
 {
-	if (s[0] == '{' && s[1] == 'B' && s[2] == 'L' && s[3] == 'U' && s[4] == 'E' && s[5] == '}')
+	if (s[0] == '{' && s[1] == 'B' && s[2] == 'L' &&
+			s[3] == 'U' && s[4] == 'E' && s[5] == '}')
 	{
 		ft_putstr(COLOR_BLUE);
 		format->pos += 6;
@@ -50,7 +62,7 @@ static int	blue_checker(t_format *format, const char *s)
 	return (false);
 }
 
-int		handle_color(t_format *format)
+int	handle_color(t_format *format)
 {
 	const char *s;
 
